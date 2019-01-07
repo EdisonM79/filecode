@@ -2,7 +2,7 @@
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1" metadata-complete="true">
-	
+
 	<!-- 配置Spring环境 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -25,7 +25,20 @@
 		<servlet-name>springMVC</servlet-name>
 		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
-	
+	<!-- 加载Log4J 配置文件  -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>WEB-INF/classes/log4j.properties</param-value>
+	</context-param>
+	<!-- 设置每3秒扫描查看配置是否发生变化，等同于动态加载 -->
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>3000</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
 	<!-- 字符过滤器 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
