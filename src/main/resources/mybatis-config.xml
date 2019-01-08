@@ -5,6 +5,6 @@
 <configuration>
     <!-- 设置别名 -->
     <typeAliases>
-        <package name="com.jzsk.entity" />
+        <package name="com.jzsk.model.entity" />
     </typeAliases>
 </configuration>
