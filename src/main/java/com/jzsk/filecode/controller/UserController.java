@@ -148,7 +148,7 @@ public class UserController extends CommonController{
 			return "login";
 		}
 		//数据库取数据
-		UserInfo user = userService.selectByLoginName(userInfo.getUserName());
+		UserInfo user = userService.selectByLoginName(userInfo.getLoginName());
 		if (user == null) {
 			addActionError("userInfo.username", MsgConstants.ERROR_01005_MSG, MESSAGE_DIV_ERROR, modelMap);
 			modelMap.put("userInfo", userInfo);

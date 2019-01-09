@@ -34,6 +34,7 @@
             <tx:method name="update*" propagation="REQUIRED" />
             <tx:method name="login*" propagation="REQUIRED" />
             <tx:method name="regist*" propagation="REQUIRED" />
+            <tx:method name="select*" propagation="REQUIRED" />
             <tx:method name="*" read-only="true" />
         </tx:attributes>
     </tx:advice>
