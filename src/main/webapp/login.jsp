@@ -1,5 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort();
+	String url = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path;
+%>
+
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -14,11 +24,11 @@
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="/filecode/static/admin/static/h-ui/css/H-ui.min.css"/>
-<link rel="stylesheet" type="text/css" href="/filecode/static/admin/static/h-ui.admin/css/H-ui.login.css"/>
-<link rel="stylesheet" type="text/css" href="/filecode/static/admin/static/h-ui.admin/css/style.css"/>
-<link rel="stylesheet" type="text/css" href="/filecode/static/admin/lib/Hui-iconfont/1.0.8/iconfont.css"/>
-<link rel="stylesheet" type="text/css" href="/filecode/static/css/qqhz.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/admin/static/h-ui/css/H-ui.min.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/admin/static/h-ui.admin/css/H-ui.login.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/admin/static/h-ui.admin/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/admin/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/qqhz.css" />
 
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
@@ -34,7 +44,7 @@
 <div class="header"></div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
-    <form class="form form-horizontal" action="/user/login.action" method="post" id="loginForm">
+    <form class="form form-horizontal" action="${pageContext.request.contextPath}/user/login" method="post" id="loginForm">
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
         <div class="formControls col-xs-8">
@@ -50,7 +60,7 @@
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
           <input id="code" name="code" class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;"/>
-          <img id="imgVerify" src="/filecode/getVerify.action" onclick="getVerify(this)"/> <!-- <a id="kanbuq"  href="javascript:;">看不清，换一张</a> --> </div>
+          <img id="imgVerify" src="${pageContext.request.contextPath}/getVerify" onclick="getVerify(this)"/> <!-- <a id="kanbuq"  href="javascript:;">看不清，换一张</a> --> </div>
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">

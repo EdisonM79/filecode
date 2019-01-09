@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.jzsk.constants.MsgConstants;
@@ -33,6 +34,7 @@ public class UserController extends CommonController{
 	/**
 	 * 生成验证码
 	 */
+	@ResponseBody
 	@RequestMapping(value = UrlConstants.GETVERIFY)
 	public void getVerify(HttpServletRequest request, HttpServletResponse response) {
 		try {
