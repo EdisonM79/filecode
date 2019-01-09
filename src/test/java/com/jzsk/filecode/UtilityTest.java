@@ -1,7 +1,7 @@
 package com.jzsk.filecode;
 
-import com.jzsk.utility.PasswordUtility;
-import com.jzsk.utility.UserIdUtility;
+import com.jzsk.filecode.utility.PasswordUtility;
+import com.jzsk.filecode.utility.UserIdUtility;
 
 public class UtilityTest {
 
