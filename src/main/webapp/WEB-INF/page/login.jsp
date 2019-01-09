@@ -85,7 +85,7 @@
 <script> 
 function getVerify(obj){
 	var path = $("#basePath").val();
-	 obj.src = "/getVerify?time"+Math.random();
+	 obj.src = "${pageContext.request.contextPath}/getVerify?time"+Math.random();
 	};
 </script>
 </body>

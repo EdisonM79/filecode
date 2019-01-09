@@ -118,14 +118,14 @@ public class UserController extends CommonController{
 		}
 		//用户名为空
 		if (StringUtility.isEmptyAfterTrim(userInfo.getLoginName())) {
-			addActionError("adminValue.username", MsgConstants.ERROR_01001_MSG, MESSAGE_DIV_ERROR, modelMap);
+			addActionError("userInfo.loginName", MsgConstants.ERROR_01001_MSG, MESSAGE_DIV_ERROR, modelMap);
 			modelMap.put("userInfo", userInfo);
 			return "login";
 		}
 		//密码
 		if (StringUtility.isEmptyAfterTrim(userInfo.getPassword())) {
 			
-			addActionError("adminValue.password", MsgConstants.ERROR_01002_MSG, MESSAGE_DIV_ERROR, modelMap);
+			addActionError("userInfo.password", MsgConstants.ERROR_01002_MSG, MESSAGE_DIV_ERROR, modelMap);
 			modelMap.put("userInfo", userInfo);
 			return "login";
 		}
@@ -150,7 +150,7 @@ public class UserController extends CommonController{
 		//数据库取数据
 		UserInfo user = userService.selectByLoginName(userInfo.getUserName());
 		if (user == null) {
-			addActionError("adminValue.username", MsgConstants.ERROR_01005_MSG, MESSAGE_DIV_ERROR, modelMap);
+			addActionError("userInfo.username", MsgConstants.ERROR_01005_MSG, MESSAGE_DIV_ERROR, modelMap);
 			modelMap.put("userInfo", userInfo);
 			return "login";
 		}
