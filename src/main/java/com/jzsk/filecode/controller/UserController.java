@@ -1,11 +1,13 @@
 package com.jzsk.filecode.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,15 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jzsk.filecode.constants.MsgConstants;
 import com.jzsk.filecode.constants.UrlConstants;
 import com.jzsk.filecode.controller.common.CommonController;
+import com.jzsk.filecode.model.form.UserInfoForm;
 import com.jzsk.filecode.model.form.UserLoginForm;
 import com.jzsk.filecode.model.value.UserInfo;
 import com.jzsk.filecode.service.UserService;
 import com.jzsk.filecode.utility.PasswordUtility;
 import com.jzsk.filecode.utility.RandomValidateCodeUtility;
+import com.jzsk.filecode.utility.ResponseUtility;
 import com.jzsk.filecode.utility.StringUtility;
+import com.jzsk.filecode.utility.UserIdUtility;
 
 @Controller
 public class UserController extends CommonController{
@@ -156,7 +162,7 @@ public class UserController extends CommonController{
 		}
 		//检查密码
 		if (!PasswordUtility.checkPassword(userInfo.getPassword(), user.getPassword())) {
-			addActionError("adminValue.password", MsgConstants.ERROR_01004_MSG, MESSAGE_DIV_ERROR, modelMap);
+			addActionError("userInfo.password", MsgConstants.ERROR_01004_MSG, MESSAGE_DIV_ERROR, modelMap);
 			modelMap.put("userInfo", userInfo);
 			return "login";
 		}
@@ -191,4 +197,112 @@ public class UserController extends CommonController{
         }                      
         return "welcome";
     }
+    
+    /**
+     * @param response
+     * @param request
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = UrlConstants.ADMIN_USER_LIST)
+    public String userList(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
+    	// map
+        Map<String, Object> attrMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
+        try {
+            Object actionErrorObj = attrMap.get("actionError");
+            if (actionErrorObj != null) {
+                String[] actionError = (String[]) actionErrorObj;
+                if (actionError.length == 3) {
+                    addActionError(actionError[0], actionError[1], actionError[2], modelMap);
+                }
+            }
+        } catch (Exception e) {
+            // 什么都不做
+        }       
+    	List<UserInfo> users = userService.selectAllUser();
+    	modelMap.put("users", users);
+        
+        
+    	return "userlist";
+    	
+    }
+    
+    /**
+     * 跳转到新增用户界面
+     * @param response
+     * @param request
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = UrlConstants.ADMIN_USER_ADD)
+    public String addUser(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
+        // map
+        Map<String, Object> attrMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
+        try {
+            Object actionErrorObj = attrMap.get("actionError");
+            if (actionErrorObj != null) {
+                String[] actionError = (String[]) actionErrorObj;
+                if (actionError.length == 3) {
+                    addActionError(actionError[0], actionError[1], actionError[2], modelMap);
+                }
+            }
+        } catch (Exception e) {
+            // 什么都不做
+        }                      
+        return "adduser";
+    }
+    
+	/**
+	 * 
+	 * @param response
+	 * @param request
+	 * @param modelMap
+	 * @param UserInfoForm
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = UrlConstants.ADMIN_USER_SAVE, method = RequestMethod.POST)
+	public String saveUser(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, UserInfoForm userInfoForm) throws Exception {
+		// 设置response
+		setResponseForJson(request, response);
+		// map
+		Map<String, Object> attrMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
+		try {
+			Object actionErrorObj = attrMap.get("actionError");
+			if (actionErrorObj != null) {
+				String[] actionError = (String[]) actionErrorObj;
+				if (actionError.length == 3) {
+					addActionError(actionError[0], actionError[1], actionError[2], modelMap);
+				}
+			}
+		} catch (Exception e) {
+			// 什么都不做
+		}
+		UserInfo userInfo = new UserInfo();
+		userInfo.setDepartment(userInfoForm.getDepartment());
+		userInfo.setEmail(userInfoForm.getEmail());
+		userInfo.setLoginName(userInfoForm.getLoginName());
+		userInfo.setPassword(PasswordUtility.encrypt("123456"));
+		userInfo.setRole(userInfoForm.getRole());
+		userInfo.setUserName(userInfoForm.getUserName());
+		userInfo.setUserId(UserIdUtility.generateUserId());
+		
+		int resultTotal = userService.addUser(userInfo);
+        //检查ip地址
+		JSONObject result = new JSONObject();
+		if (resultTotal > 0)														// 操作成功
+        {
+            result.put("success", true);
+        } else {																	// 操作失败
+            result.put("success", false);
+            result.put("message", "操作失败！");
+        }
+        ResponseUtility.write(response, result);
+        return null;
+	}
 }

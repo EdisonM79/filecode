@@ -79,12 +79,12 @@
 			<dt><i class="Hui-iconfont">&#xe616;</i> 文件管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="/admin/files" data-title="文件名称" href="javascript:void(0)">文件名称</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="文件名称" href="javascript:void(0)">文件名称</a></li>
 			</ul>
 		</dd>
 	</dl> 
-<!-- 		<dl id="menu-product">
-			<dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+ 		<dl id="menu-product">
+			<dt><i class="Hui-iconfont">&#xe613;</i> 项目管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
 					<li><a data-href="/admin/images" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
@@ -92,18 +92,16 @@
 		</dd>
 	</dl>
 		<dl id="menu-product">
-			<dt><i class="Hui-iconfont">&#xe620;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe620;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="/admin/products" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
-					<li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
-					<li><a data-href="product-list.html" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/user/list" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
 			</ul>
 		</dd>
-	</dl> -->
-<!-- 
+	</dl> 
+ <!--
 		<dl id="menu-comments">
-			<dt><i class="Hui-iconfont">&#xe622;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe622;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
 					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
@@ -178,7 +176,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			 <iframe scrolling="yes" frameborder="0" src="/admin/welcome"></iframe>
+			 <iframe scrolling="yes" frameborder="0" src="${pageContext.request.contextPath}/user/welcome"></iframe>
 	</div>
 </div>
 </section>

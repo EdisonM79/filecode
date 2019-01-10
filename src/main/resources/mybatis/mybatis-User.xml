@@ -16,10 +16,28 @@
     user_id, user_name, login_name, password, department, email, role
   </sql>
 
-   <select id="selectByLoginName" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where login_name = #{loginName,jdbcType=VARCHAR}
-  </select>
+   <select id="selectByLoginName" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select
+	<include refid="Base_Column_List" />
+	from user
+	where login_name = #{loginName,jdbcType=VARCHAR}
+	</select>
+  
+    <select id="selectAllUser" resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List" />
+	from user
+	</select>
+	
+	<insert id="addUser" parameterType="com.jzsk.filecode.model.entity.TrUser">
+	insert into user 
+      (
+        user_id, user_name, login_name, password, department, email, role
+      )
+    values 
+     (
+    	#{userId}, #{userName}, #{loginName}, #{password}, #{department}, #{email}, #{role}
+     )	
+  </insert>
+  
 </mapper>

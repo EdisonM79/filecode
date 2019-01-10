@@ -26,21 +26,21 @@ public class UrlConstants {
 	/** 后台主页 */
 	public static final String USER_HOME = "/home";
 	/** 后台主页欢迎页面 */
-	public static final String USER_WELCOME = "/welcome";
+	public static final String USER_WELCOME = "/user/welcome";
 
 	/* 文件 */
 	/** 文件编号列表页 */
-	public static final String ADMIN_FILES = "/admin/files";
+	public static final String ADMIN_FILECODE_LIST = "/admin/filecode/list";
 	/** 文件编号添加页面 */
-	public static final String ADMIN_FILE_ADD = "/admin/file";
+	public static final String ADMIN_FILECODE_ADD = "/admin/filecode/add";
 	/** 文件编号保存 */
-	public static final String ADMIN_FILE_SAVE = "/admin/product/save";
-	/** 文件编号使用 */
-	public static final String ADMIN_FILE_STOP = "/admin/product/stop";
-	/** 文件编号未使用 */
-	public static final String ADMIN_FILE_STAR = "/admin/product/star";
-	/** 文件编号删除 */
-	public static final String ADMIN_FILE_DELETE = "/admin/product/delete";
-	/** 文件编号修改 */
-	public static final String ADMIN_FILE_EDIT = "/admin/product/edit";
+	public static final String ADMIN_FILECODE_SAVE = "/admin/filecode/save";
+	
+	/* 用户管理 */
+	/** 用户管理列表页 */
+	public static final String ADMIN_USER_LIST = "/admin/user/list";
+	/** 用户管理-新增用户 */
+	public static final String ADMIN_USER_ADD = "/admin/user/add";
+	/** 用户管理-保存用户 */
+	public static final String ADMIN_USER_SAVE= "/admin/user/save";
 }

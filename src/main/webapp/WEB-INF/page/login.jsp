@@ -48,13 +48,13 @@
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
         <div class="formControls col-xs-8">
-          <input id="loginName" name="userInfo.loginName" type="text" placeholder="账户" class="input-text size-L"/>
+          <input id="loginName" name="userInfo.loginName" value="${userInfo.loginName}" type="text" placeholder="账户" class="input-text size-L"/>
         </div>
       </div>
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
         <div class="formControls col-xs-8">
-          <input id="password" name="userInfo.password" type="password" placeholder="密码" class="input-text size-L"/>
+          <input id="password" name="userInfo.password" value="${userInfo.password}" type="password" placeholder="密码" class="input-text size-L"/>
         </div>
       </div>
       <div class="row cl">
@@ -79,9 +79,9 @@
   </div>
 </div>
 <div class="footer">Copyright 成都精准时空  </div>
-<script type="text/javascript" src="/filecode/static/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="/filecode/static/admin/static/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="/filecode/static/js/qqhz.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/admin/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/qqhz.js"></script>
 <script> 
 function getVerify(obj){
 	var path = $("#basePath").val();

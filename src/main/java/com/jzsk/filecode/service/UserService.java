@@ -1,5 +1,7 @@
 package com.jzsk.filecode.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.jzsk.filecode.model.value.UserInfo;
@@ -7,5 +9,9 @@ import com.jzsk.filecode.model.value.UserInfo;
 @Service
 public interface UserService {
 	
-	public UserInfo selectByLoginName(String loginName);
+	UserInfo selectByLoginName(String loginName);
+	
+	List<UserInfo> selectAllUser();
+	
+	int addUser(UserInfo user);
 }
