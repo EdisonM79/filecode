@@ -87,7 +87,7 @@
 			<dt><i class="Hui-iconfont">&#xe613;</i> 项目管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="/admin/images" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/project/list" data-title="项目管理" href="javascript:void(0)">项目管理</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -96,6 +96,8 @@
 			<dd>
 				<ul>
 					<li><a data-href="${pageContext.request.contextPath}/admin/user/list" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/function/list" data-title="职能管理" href="javascript:void(0)">职能管理</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/type/list" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
 			</ul>
 		</dd>
 	</dl> 

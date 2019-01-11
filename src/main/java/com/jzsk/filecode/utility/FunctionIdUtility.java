@@ -15,10 +15,10 @@ import java.util.Random;
  * @author Edison_M79  
  * @date 2018年9月7日  
  */
-public class ProductIdUtility {
+public class FunctionIdUtility {
     
     /** 标识符 */
-    private static final String ID = "P";
+    private static final String ID = "FC";
 
     /** 字符源 */
     private static final String BASE_WORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -28,7 +28,7 @@ public class ProductIdUtility {
      * 
      * @return
      */
-    public static String generateBatchId() {
+    public static String generateFunctionId() {
 
         String hexTime = Long.toHexString(DateUtility.getCurrentTimestamp().getTime()).toUpperCase();
 

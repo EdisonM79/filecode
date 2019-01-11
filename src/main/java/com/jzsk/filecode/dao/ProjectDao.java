@@ -1,5 +1,7 @@
 package com.jzsk.filecode.dao;
 
+import java.util.List;
+
 import com.jzsk.filecode.model.entity.TrProject;
 
 public interface ProjectDao {
@@ -15,4 +17,6 @@ public interface ProjectDao {
     int updateByPrimaryKeySelective(TrProject record);
 
     int updateByPrimaryKey(TrProject record);
+    
+    List<TrProject>selectAllProject();
 }

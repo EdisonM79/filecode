@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.jzsk.filecode.model.entity.TrUser;
 import com.jzsk.filecode.model.value.UserInfo;
 
 @Service
@@ -14,4 +15,6 @@ public interface UserService {
 	List<UserInfo> selectAllUser();
 	
 	int addUser(UserInfo user);
+	
+	UserInfo selectByPrimaryKey(String userId);
 }

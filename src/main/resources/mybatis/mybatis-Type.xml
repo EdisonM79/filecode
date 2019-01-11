@@ -108,4 +108,10 @@
       type_name = #{typeName,jdbcType=VARCHAR}
     where type_id = #{typeId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectAllType" resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List" />
+	from type
+	</select>
 </mapper>

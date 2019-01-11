@@ -165,8 +165,9 @@ public class UserController extends CommonController{
 			addActionError("userInfo.password", MsgConstants.ERROR_01004_MSG, MESSAGE_DIV_ERROR, modelMap);
 			modelMap.put("userInfo", userInfo);
 			return "login";
-		}
-
+		} 
+		session.setMaxInactiveInterval(24 * 60 * 60);
+		session.setAttribute("currentUser", user);
         //检查ip地址
 		return "index";
 	}

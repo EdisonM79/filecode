@@ -1,7 +1,11 @@
 package com.jzsk.filecode.service;
 
-import com.jzsk.filecode.model.entity.TrType;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.jzsk.filecode.model.entity.TrType;
+@Service
 public interface TypeService {
 
     int deleteByPrimaryKey(String typeId);
@@ -15,4 +19,6 @@ public interface TypeService {
     int updateByPrimaryKeySelective(TrType record);
 
     int updateByPrimaryKey(TrType record);
+    
+    List<TrType>selectAllType();
 }

@@ -11,4 +11,6 @@ public interface UserDao {
 	List<TrUser> selectAllUser();
 	
 	Integer addUser(TrUser user);
+	
+	TrUser selectByPrimaryKey(String userId);
 }

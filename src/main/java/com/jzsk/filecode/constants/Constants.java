@@ -20,35 +20,14 @@ public class Constants {
 	 */
 	/** 最大页码数 */
 	public static final int PAGE_LIST_MAX_COUNT = 3;
-
+	
 	/*
-	 * 图片分类
+	 * 项目是否锁定
 	 */
-	/** 首页轮播大图 */
-	public static final String IMAGE_DIV_BANNER = "0";
-	/** 产品图片 */
-	public static final String IMAGE_DIV_PRODUCT = "1";
-	/** 解决方案图片 */
-	public static final String IMAGE_DIV_SOLUTION = "2";
+	/** 锁定项目，不允许删除 */
+	public static final String PROJECT_STATE_LOCK = "1";
+	/** 不锁定项目，允许删除 */
+	public static final String PROJECT_STATE_UNLOCK = "0";
 
-	/*
-	 * 图片状态分类
-	 */
-	/** 图片状态-未删除 */
-	public static final String IMAGE_STATE_ON = "1";
-	/** 图片状态-删除 */
-	public static final String IMAGE_STATE_OFF = "0";
 
-	/*
-	 * 产品状态分类
-	 */
-	/** 图片状态-显示 */
-	public static final String PRODUCT_DISPLAY_ON = "1";
-	/** 图片状态-不显示 */
-	public static final String PRODUCT_DISPLAY_OFF = "0";
-
-	/** 图片分类-简略图 */
-	public static final String PRODUCT_DIV_BRIEF = "0";
-	/** 图片分类-详细图 */
-	public static final String PRODUCT_DIV_CONTENT = "1";
 }

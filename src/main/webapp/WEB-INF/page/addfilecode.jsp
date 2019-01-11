@@ -45,9 +45,13 @@
 	<form action="${pageContext.request.contextPath}/admin/product/save" method="post" class="form form-horizontal" id="form-product-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目代号：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="project" name="project"/>
-			</div>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="project" id="project" class="select">
+					<c:forEach  var="projects" items="${codeValue.projects }">
+						<option value="${projects.projectId }">${projects.projectName }</option>
+					</c:forEach>
+				</select>
+				</span> </div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>模块代号：</label>
@@ -59,17 +63,9 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>职能代号：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="function" id="function" class="select">
-					<option value="CZ">生产操作文件</option>
-                    <option value="JZ">检验操作文件</option>
-					<option value="GY">工艺文件</option>
-                    <option value="SB">设备文件</option>
-					<option value="JY">检验标准文件</option>
-                    <option value="SJ">设计文件</option>
-					<option value="BZ">标准作业指导书</option>
-                    <option value="LC">标准作业卡</option>
-					<option value="JX">采购技术协议</option>
-                    <option value="ZB">质量保证书</option>
-					<option value="AZ">安装手册</option>
+					<c:forEach  var="functions" items="${codeValue.functions }">
+						<option value="${functions.functionId }">${functions.functionName }</option>
+					</c:forEach>
 				</select>
 				</span> </div>
 		</div>
@@ -77,16 +73,9 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类代号：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="type" id="type" class="select">
-					<option value="DOC">公司内部产生的文档性文件</option>
-                    <option value="ECR">电路设计变更需求表</option>
-					<option value="MIG">外部输入文件</option>
-                    <option value="SCR">软件变更需求表</option>
-					<option value="SCH">电路原理图</option>
-                    <option value="PCB">电路印制板设计图</option>
-					<option value="GAB">光绘文件设计图</option>
-                    <option value="DWG">结构设计图纸</option>
-					<option value="BOM">元器件清单</option>
-                    <option value="TMP">模板文档</option>
+					<c:forEach  var="types" items="${codeValue.types }">
+						<option value="${types.typeId }">${types.typeName }</option>
+					</c:forEach>
 				</select>
 				</span> </div>
 		</div>

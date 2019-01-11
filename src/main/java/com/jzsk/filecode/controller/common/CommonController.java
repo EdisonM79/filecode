@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.ui.ModelMap;
 import org.apache.shiro.authc.AuthenticationException;
+import org.springframework.ui.ModelMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jzsk.filecode.constants.Constants;
@@ -23,15 +23,15 @@ import com.jzsk.filecode.utility.CookieUtility;
 import com.jzsk.filecode.utility.StringUtility;
 
 public class CommonController {
-	/** ��Ϣ����.���� */
+	/** 消息分类-错误 */
 	protected static final String MESSAGE_DIV_ERROR = "01";
-	/** ��Ϣ����.��Ϣ */
+	/** 消息分类-信息*/
 	protected static final String MESSAGE_DIV_INFO = "02";
 	/** cookieUtility */
 	private CookieUtility cookieUtility = new CookieUtility();
 
 	/**
-	 * �Զ���¼
+	 * 自动登录
 	 * 
 	 * @param request
 	 * @param response
@@ -42,13 +42,13 @@ public class CommonController {
 		UserValue userValue = null;
 		
 		try {
-			// ȡ��SESSION�û�Value
+			// sessionUserValue
 			UserValue sessionUserValue = getSessionUser(request);
-			// ȡ��cookie
+			// cookieValue
 			CookieValue cookieValue = getCookie(request);
 			if (cookieValue != null) {
 				if (sessionUserValue == null || !cookieValue.getUserId().equals(sessionUserValue.getUserId()) || !cookieValue.getPassword().equals(sessionUserValue.getCookiePassword())) {
-					// �Զ���¼
+					// 自动登录
 					UserLoginValue userLoginValue = new UserLoginValue();
 					userLoginValue.setUserId(cookieValue.getUserId());
 					userLoginValue.setCookiePassword(cookieValue.getPassword());
@@ -57,7 +57,7 @@ public class CommonController {
 					if (!StringUtility.isEmptyAfterTrim(userValue.getUserId())) {
 						
 						try {
-							// ����cookie
+							// 设置cookie
 							cookieValue = new CookieValue();
 							cookieValue.setUserId(userValue.getUserId());
 							cookieValue.setPassword(userValue.getCookiePassword());
@@ -69,7 +69,7 @@ public class CommonController {
 							cookieSessionId.setMaxAge(-1);
 							response.addCookie(cookieSessionId);
 //							userValue.setPassword(null);
-							// ��¼��Ϣ����SESSION
+							// 添加用户信息到session
 							addSessionUser(userValue, request);
 						} catch (AuthenticationException e) {
 							// ʲô������

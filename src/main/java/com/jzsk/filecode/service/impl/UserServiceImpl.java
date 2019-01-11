@@ -73,4 +73,20 @@ public class UserServiceImpl implements UserService {
 		int result = userDao.addUser(newUser);
 		return result;
 	}
+
+	@Override
+	public UserInfo selectByPrimaryKey(String userId) {
+		// TODO Auto-generated method stub
+		TrUser trUser = userDao.selectByPrimaryKey(userId);
+		UserInfo user = new UserInfo();
+		user.setDepartment(trUser.getDepartment());
+		user.setEmail(trUser.getEmail());
+		user.setPassword(trUser.getPassword());
+		user.setLoginName(trUser.getLoginName());
+		user.setRole(trUser.getRole());
+		user.setUserId(trUser.getUserId());
+		user.setUserName(trUser.getUserName());
+		
+		return user;
+	}
 }

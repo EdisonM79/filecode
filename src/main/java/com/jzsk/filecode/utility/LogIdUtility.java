@@ -1,32 +1,31 @@
 /**
- * BannerIdUtility.java
+ * UserIdUtility.java
  * 
- * jzsk 2018
+ * zhnf 2016
  * 
- * mopengxi@163.com
+ * LiuYangtao
  */
 package com.jzsk.filecode.utility;
 
 import java.util.Random;
 
 /**
- * @author mopengxi@163.com
+ * @author LiuYangTao
  *
  */
-public class BannerIdUtility {
-	
+public class LogIdUtility {
 	/** 标识符 */
-	private static final String ID = "B";
+	private static final String ID = "L";
 
 	/** 字符源 */
 	private static final String BASE_WORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	/**
-	 * 生成bannerID
+	 * 生成新闻ID
 	 * 
 	 * @return
 	 */
-	public static String generateBatchId() {
+	public static String generateUserId() {
 
 		String hexTime = Long.toHexString(DateUtility.getCurrentTimestamp().getTime()).toUpperCase();
 
@@ -39,6 +38,7 @@ public class BannerIdUtility {
 			int number = random.nextInt(BASE_WORD.length());
 			sb.append(BASE_WORD.charAt(number));
 		}
+
 		return sb.toString();
 	}
 }

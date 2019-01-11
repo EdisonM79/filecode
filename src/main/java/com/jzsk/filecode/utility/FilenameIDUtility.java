@@ -7,9 +7,9 @@ import java.util.Random;
  * @author mopx
  *
  */
-public class ImageIDUtility {
+public class FilenameIDUtility {
 	/** 标识符 */
-	private static final String ID = "I";
+	private static final String ID = "F";
 
 	/** 字符源 */
 	private static final String BASE_WORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -19,7 +19,7 @@ public class ImageIDUtility {
 	 * 
 	 * @return
 	 */
-	public static String generateImageID() {
+	public static String generateFilenameID() {
 
 		String hexTime = Long.toHexString(DateUtility.getCurrentTimestamp().getTime()).toUpperCase();
 

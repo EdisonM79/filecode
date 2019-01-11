@@ -1,7 +1,11 @@
 package com.jzsk.filecode.service;
 
-import com.jzsk.filecode.model.entity.TrFunction;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.jzsk.filecode.model.entity.TrFunction;
+@Service
 public interface FunctionService {
 
     int deleteByPrimaryKey(String functionId);
@@ -15,4 +19,6 @@ public interface FunctionService {
     int updateByPrimaryKeySelective(TrFunction record);
 
     int updateByPrimaryKey(TrFunction record);
+
+    List<TrFunction>selectAllFunction();
 }

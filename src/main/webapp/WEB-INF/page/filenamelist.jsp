@@ -53,6 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<thead>
 				<tr class="text-c">
 					<th width="80">编号ID</th>
+					<th width="80">所属项目</th>
 					<th width="80">文件名称</th>
 					<th width="80">文件编号</th>
 					<th width="80">创建人</th>
@@ -65,9 +66,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr class="text-c">
 					<input type="hidden" value="${filecode.filenameId}" name="userId">
 					<td>${filecode.filenameId}</td>
+					<td>${filecode.projectName}</td>
 					<td>${filecode.filename}</td>
 					<td>${filecode.filecode}</td>
-					<td>${filecode.userId}</td>
+					<td>${filecode.user}</td>
 					<td>${filecode.creteTime}</td>
 					<td class="f-14 td-manage">
 						<a style="text-decoration:none" class="ml-5" onClick="employee_edit('编辑','${pageContext.request.contextPath}/employee/preSave?id=${employee.id }','10001')" href="javascript:;" title="编辑">

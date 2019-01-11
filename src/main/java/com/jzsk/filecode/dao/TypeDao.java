@@ -1,5 +1,7 @@
 package com.jzsk.filecode.dao;
 
+import java.util.List;
+
 import com.jzsk.filecode.model.entity.TrType;
 
 public interface TypeDao {
@@ -15,4 +17,6 @@ public interface TypeDao {
     int updateByPrimaryKeySelective(TrType record);
 
     int updateByPrimaryKey(TrType record);
+    
+    List<TrType>selectAllType();
 }
