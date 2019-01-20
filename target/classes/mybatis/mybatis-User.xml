@@ -45,4 +45,7 @@
     from user
     where user_id = #{userId,jdbcType=VARCHAR}
   </select>
+  <select id="countAll" resultType="java.lang.Integer">
+		SELECT count(*) FROM user
+	</select>
 </mapper>

@@ -102,4 +102,8 @@
 		<include refid="Base_Column_List" />
 		from document
 	</select>
+	
+	<select id="countAll" resultType="java.lang.Integer">
+		SELECT count(*) FROM document
+	</select>
 </mapper>

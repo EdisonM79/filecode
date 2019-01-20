@@ -6,6 +6,16 @@ public class FilecodeForm {
 	private String module;
 	private String function;
 	private String type;
+	private String filename;
+	
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
 	public String getProject() {
 		return project;

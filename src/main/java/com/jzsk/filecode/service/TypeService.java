@@ -21,4 +21,6 @@ public interface TypeService {
     int updateByPrimaryKey(TrType record);
     
     List<TrType>selectAllType();
+    
+    int countAll();
 }

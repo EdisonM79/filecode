@@ -22,4 +22,6 @@ public interface DocumentService {
     int updateByPrimaryKey(TrDocument record);
     
     List<TrDocument> selectAllDocument();
+    
+    int countAll();
 }

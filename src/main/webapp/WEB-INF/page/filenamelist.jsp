@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th width="80">文件编号</th>
 					<th width="80">创建人</th>
 					<th width="120">生成时间</th>
-					<th width="80">操作</th>
+					<!-- <th width="80">操作</th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -71,14 +71,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>${filecode.filecode}</td>
 					<td>${filecode.user}</td>
 					<td>${filecode.creteTime}</td>
-					<td class="f-14 td-manage">
+					<%-- <td class="f-14 td-manage">
 						<a style="text-decoration:none" class="ml-5" onClick="employee_edit('编辑','${pageContext.request.contextPath}/employee/preSave?id=${employee.id }','10001')" href="javascript:;" title="编辑">
 							<i class="Hui-iconfont">&#xe6df;</i>
 						</a>
 						<a style="text-decoration:none" class="ml-5" onClick="employee_del(this,${employee.id })" href="javascript:;" title="删除">
 							<i class="Hui-iconfont">&#xe6e2;</i>
 						</a>
-					</td>
+					</td> --%>
 				</tr>
 			</c:forEach> 		
 			</tbody>
@@ -87,11 +87,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <script type="text/javascript">
 $('.table-sort').dataTable({
-	"aaSorting": [[ 1, "asc" ]],//默认第几个排序
+	"aaSorting": [[ 5, "desc" ]],//默认第几个排序
 	"bStateSave": true,//状态保存
 	"aoColumnDefs": [
 	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[5]}// 制定列不参与排序
+	  {"orderable":false,"aTargets":[0]}// 制定列不参与排序
 	]
 });
 

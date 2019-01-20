@@ -58,4 +58,10 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectDao.selectAllProject();
 	}
 
+	@Override
+	public int countAll() {
+		// TODO Auto-generated method stub
+		return projectDao.countAll();
+	}
+
 }

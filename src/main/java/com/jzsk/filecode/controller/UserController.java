@@ -39,6 +39,17 @@ public class UserController extends CommonController{
 	public static final String RANDOMCODEKEY = "RANDOMVALIDATECODEKEY";
 	
 	/**
+	 * 退出
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = UrlConstants.LOGOUT)
+	public String logout(HttpSession session) {
+		session.invalidate();												// 使session失效。可以立即使当前会话失效，原来会话中存储的所有对象都不能再被访问。  
+		return "login";
+	}
+	
+	/**
 	 * 生成验证码
 	 */
 	@ResponseBody
@@ -223,6 +234,8 @@ public class UserController extends CommonController{
             // 什么都不做
         }       
     	List<UserInfo> users = userService.selectAllUser();
+    	int count = userService.countAll();
+    	modelMap.put("count", count);
     	modelMap.put("users", users);
         
         

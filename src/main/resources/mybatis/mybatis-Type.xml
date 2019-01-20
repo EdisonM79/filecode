@@ -114,4 +114,8 @@
 	<include refid="Base_Column_List" />
 	from type
 	</select>
+	
+	<select id="countAll" resultType="java.lang.Integer">
+		SELECT count(*) FROM type
+	</select>
 </mapper>

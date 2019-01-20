@@ -21,6 +21,8 @@ public class UrlConstants {
 	/* 后台 */
 	/** 登录页面 */
 	public static final String LOGIN = "/login";
+	/** 退出系统 */
+	public static final String LOGOUT = "/logout";
 	/** 后台登录 */
 	public static final String USER_LOGIN = "/user/login";
 	/** 后台主页 */

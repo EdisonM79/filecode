@@ -55,4 +55,6 @@ public interface DocumentDao {
     
     
     List<TrDocument> selectAllDocument();
+    
+    int countAll();
 }

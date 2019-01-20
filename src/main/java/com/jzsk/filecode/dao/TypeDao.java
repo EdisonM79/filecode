@@ -19,4 +19,6 @@ public interface TypeDao {
     int updateByPrimaryKey(TrType record);
     
     List<TrType>selectAllType();
+
+    int countAll();
 }

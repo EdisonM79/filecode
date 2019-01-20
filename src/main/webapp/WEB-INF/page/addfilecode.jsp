@@ -54,6 +54,12 @@
 				</span> </div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文件名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="filename" name="filename"/>
+			</div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>模块代号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="" placeholder="" id="module" name="module"/>
@@ -100,15 +106,21 @@ $(document).ready(function ()
 	$("#addButton").click(function( )
 	{
 		 var project = $("#project").val();
+		 var filename = $("#filename").val();
          var module = $("#module").val();
+         var type = $("#type").val();
          
          if(project==null||project==""){
-        	 layer.alert("请先上传图片！");
+        	 layer.alert("请先选择项目代号！");
         	 return false;
          }
          
          if(module==null||module==""){
-             layer.alert("请先填写产品名称！");
+             layer.alert("请先选择模块代号！");
+             return false;
+         }
+         if(type==null||type==""){
+             layer.alert("请先选择分类代号！");
              return false;
          }
          

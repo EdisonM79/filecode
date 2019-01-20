@@ -16,4 +16,6 @@ public interface LogDao {
     int updateByPrimaryKeySelective(TrLog record);
 
     int updateByPrimaryKey(TrLog record);
+
+    int countAll();
 }

@@ -52,7 +52,8 @@ public class TypeController extends CommonController{
             // 什么都不做
         }       
     	List<TrType> types = typeService.selectAllType();
-    	
+    	int count = typeService.countAll();
+    	modelMap.put("count", count);
     	modelMap.put("types", types);
          
     	return "typelist";

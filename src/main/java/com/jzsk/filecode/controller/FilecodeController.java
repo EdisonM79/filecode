@@ -1,6 +1,5 @@
 package com.jzsk.filecode.controller;
 
-import java.nio.channels.ScatteringByteChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +25,10 @@ import com.jzsk.filecode.model.entity.TrLogKey;
 import com.jzsk.filecode.model.entity.TrProject;
 import com.jzsk.filecode.model.entity.TrType;
 import com.jzsk.filecode.model.form.FilecodeForm;
-import com.jzsk.filecode.model.form.UserInfoForm;
 import com.jzsk.filecode.model.value.CodeValue;
 import com.jzsk.filecode.model.value.FilenameValue;
 import com.jzsk.filecode.model.value.FunctionValue;
 import com.jzsk.filecode.model.value.ProjectInfoValue;
-import com.jzsk.filecode.model.value.ProjectValue;
 import com.jzsk.filecode.model.value.TypeValue;
 import com.jzsk.filecode.model.value.UserInfo;
 import com.jzsk.filecode.service.FilenameService;
@@ -42,9 +39,7 @@ import com.jzsk.filecode.service.TypeService;
 import com.jzsk.filecode.service.UserService;
 import com.jzsk.filecode.utility.DateUtility;
 import com.jzsk.filecode.utility.FilenameIDUtility;
-import com.jzsk.filecode.utility.PasswordUtility;
 import com.jzsk.filecode.utility.ResponseUtility;
-import com.jzsk.filecode.utility.UserIdUtility;
 
 @Controller
 public class FilecodeController extends CommonController{
@@ -85,6 +80,7 @@ public class FilecodeController extends CommonController{
             // 什么都不做
         }       
     	List<TrFilename> codes = filenameService.selectAllFilecode();
+    	int count = filenameService.countAll();
     	List<FilenameValue> filecodes = new ArrayList<>();
     	for (TrFilename trFilename : codes) {
     		FilenameValue codeValue = new FilenameValue();
@@ -99,6 +95,7 @@ public class FilecodeController extends CommonController{
     		filecodes.add(codeValue);
 		}
     	modelMap.put("filecodes", filecodes);
+    	modelMap.put("count", count);
          
     	return "filenamelist";
     	
@@ -176,7 +173,7 @@ public class FilecodeController extends CommonController{
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	@RequestMapping(value = UrlConstants.ADMIN_FILECODE_SAVE, method = RequestMethod.POST)
 	public String saveFilecode(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, FilecodeForm filecodeForm) throws Exception {
 		// 设置response
@@ -199,65 +196,78 @@ public class FilecodeController extends CommonController{
 		String module = filecodeForm.getModule();
 		String functionCode = functionService.selectByPrimaryKey(filecodeForm.getFunction()).getFunctionCode();
 		String typeCode = typeService.selectByPrimaryKey(filecodeForm.getType()).getTypeCode();
-		
+		//获取页面传递过来的log，然后用于查询
 		TrLogKey logKey = new TrLogKey();
 		logKey.setFunctionId(functionCode);
 		logKey.setModelNum(module);
 		logKey.setProjectId(projectCode);
-		logKey.setTypeId(typeCode);
-		
+		logKey.setTypeId(typeCode);	
 		TrLog log = new TrLog();
 		log = logService.selectByPrimaryKey(logKey);
+		//假如还没有生成log，则重新生成
 		if (null == log) {
 			TrLog log2 = new TrLog();
 			log2.setFunctionId(functionCode);
 			log2.setModelNum(module);
 			log2.setProjectId(projectCode);
 			log2.setTypeId(typeCode);
-			String namelog = "0,-,";//用于保存生成的区间
-			int rd = (int) (Math.random()*100000);//10W以内的
+			int star = (int) (Math.random()*500);//500以内的
+			String starString = String.valueOf(star);
+			//用于保存生成的区间	
+			
+			String namelog = starString + ",-,";		
+			int rd = (int) (Math.random()*50000 + 50000);//5W-10W以内的
 			namelog += String.valueOf(rd);
 			namelog += ";";
-			namelog += String.valueOf(rd);
+			
+			namelog += String.valueOf(rd);			
 		    rd = (int) (Math.random()*100000+100000);//20W以内的
 			namelog += ",-,";
 			namelog += String.valueOf(rd);
 			namelog += ";";
+			
 			namelog += String.valueOf(rd);
 		    rd = (int) (Math.random()*100000+200000);//30W
 			namelog += ",-,";
 			namelog += String.valueOf(rd);
 			namelog += ";";
+			
 			namelog += String.valueOf(rd);
 		    rd = (int) (Math.random()*100000+300000);//40W
 			namelog += ",-,";
 			namelog += String.valueOf(rd);
 			namelog += ";";
+			
 			namelog += String.valueOf(rd);
 		    rd = (int) (Math.random()*100000+400000);//50W
 			namelog += ",-,";
 			namelog += String.valueOf(rd);
 			namelog += ";";
+			
 			namelog += String.valueOf(rd);
 		    rd = (int) (Math.random()*100000+500000);//60W
 			namelog += ",-,";
 			namelog += String.valueOf(rd);
 			namelog += ";";
+			
 			namelog += String.valueOf(rd);
 		    rd = (int) (Math.random()*100000+600000);//70W
 			namelog += ",-,";
 			namelog += String.valueOf(rd);
 			namelog += ";";
+			
 			namelog += String.valueOf(rd);
 		    rd = (int) (Math.random()*100000+700000);//80W
 			namelog += ",-,";
 			namelog += String.valueOf(rd);
 			namelog += ";";
+			
 			namelog += String.valueOf(rd);
 		    rd = (int) (Math.random()*100000+800000);//90W
 			namelog += ",-,";
 			namelog += String.valueOf(rd);
 			namelog += ";";
+			
 			namelog += String.valueOf(rd);
 			namelog += ",-,1000000";
 			log2.setNamelog(namelog);
@@ -272,39 +282,67 @@ public class FilecodeController extends CommonController{
 		filename += log.getFunctionId();
 		filename += "-";
 		filename += log.getTypeId();
-		filename += "-";
-		
+		filename += "-0";
+		//用“;”把log分为10
 		String logString = log.getNamelog();
 		String[] loglist = logString.split(";");
+		//随机10以内的整数
 		int rs = (int) (Math.random()*10);//10以内的
+		//获取当前随机的整数
 		String currentlog = loglist[rs];
+		//使用，分割字符串
 		String[] current = currentlog.split(",");
+		//如果还没有使用
 		if ("-"==current[1]||"-".equals(current[1])) {
+			//就使用左边的字符串
 			current[1] = current[0];
-			filename += current[0];
 		} else {
+			//否则把中间的数+1
 			int add = Integer.parseInt(current[1]);
 			add++;
 			current[1] = String.valueOf(add);
-			filename += current[1];
 		}
 		
+		int length = current[1].length();
+		String addString = "";
+		for (int i = 0; i < 6 - length; i++) {
+			addString += "0";
+		}
+		filename += addString;
+		filename += current[1];	
+		//重新拼接log字符串
+		String editLog = current[0]+","+current[1]+","+current[2];
+		loglist[rs] = editLog;
+		String newLog = "";
+		for (int i = 0; i < 10; i++) {
+			newLog+=loglist[i];
+			newLog+=";";
+		}
+		TrLog newFileLog = new TrLog();
+		newFileLog.setFunctionId(functionCode);
+		newFileLog.setModelNum(module);
+		newFileLog.setProjectId(projectCode);
+		newFileLog.setTypeId(typeCode);
+		newFileLog.setNamelog(newLog);
+		//生成新的文件标号记录
+		int logResult = logService.updateByPrimaryKeySelective(newFileLog);
 		
+		//把新生成的文件编号记录
 		TrFilename record = new TrFilename();
 		record.setFilenameId(FilenameIDUtility.generateFilenameID());
 		record.setCreteTime(DateUtility.getCurrentTimestamp());
-		record.setFilename(projectService.selectByPrimaryKey(filecodeForm.getProject()).getProjectName());
+		//record.setFilename(projectService.selectByPrimaryKey(filecodeForm.getProject()).getProjectName());
+		record.setFilename(filecodeForm.getFilename());
 		record.setProjectId(filecodeForm.getProject());
 		record.setFilecode(filename);
-		
+		//获取当前使用人的ID
 		HttpSession session = request.getSession();
 		UserInfo currentUser = (UserInfo)session.getAttribute("currentUser");
-		record.setUserId(currentUser.getUserId());
-		
+		record.setUserId(currentUser.getUserId());		
 		int resultTotal = filenameService.insertSelective(record);
         //检查ip地址
 		JSONObject result = new JSONObject();
-		if (resultTotal > 0)														// 操作成功
+		if (resultTotal > 0 && logResult > 0)														// 操作成功
         {
             result.put("success", true);
         } else {																	// 操作失败

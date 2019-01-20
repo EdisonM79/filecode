@@ -21,4 +21,6 @@ public interface ProjectService {
     int updateByPrimaryKey(TrProject record);
     
     List<TrProject>selectAllProject();
+    
+    int countAll();
 }

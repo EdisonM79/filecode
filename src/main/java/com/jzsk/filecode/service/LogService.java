@@ -19,4 +19,6 @@ public interface LogService {
     int updateByPrimaryKeySelective(TrLog record);
 
     int updateByPrimaryKey(TrLog record);
+    
+    int countAll();
 }

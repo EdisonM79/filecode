@@ -13,4 +13,6 @@ public interface UserDao {
 	Integer addUser(TrUser user);
 	
 	TrUser selectByPrimaryKey(String userId);
+
+	int countAll();
 }

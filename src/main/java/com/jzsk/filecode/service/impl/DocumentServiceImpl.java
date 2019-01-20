@@ -58,4 +58,10 @@ public class DocumentServiceImpl implements DocumentService {
 		return documentDao.selectAllDocument();
 	}
 
+	@Override
+	public int countAll() {
+		// TODO Auto-generated method stub
+		return documentDao.countAll();
+	}
+
 }

@@ -19,4 +19,6 @@ public interface FilenameDao {
     int updateByPrimaryKey(TrFilename record);
     
     List<TrFilename> selectAllFilecode();
+    
+    int countAll();
 }

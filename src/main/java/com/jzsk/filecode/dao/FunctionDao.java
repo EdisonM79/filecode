@@ -19,4 +19,6 @@ public interface FunctionDao {
     int updateByPrimaryKey(TrFunction record);
     
     List<TrFunction>selectAllFunction();
+
+    int countAll();
 }

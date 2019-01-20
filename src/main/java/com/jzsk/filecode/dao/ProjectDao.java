@@ -19,4 +19,6 @@ public interface ProjectDao {
     int updateByPrimaryKey(TrProject record);
     
     List<TrProject>selectAllProject();
+
+    int countAll();
 }

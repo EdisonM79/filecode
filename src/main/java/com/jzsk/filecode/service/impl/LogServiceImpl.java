@@ -49,4 +49,10 @@ public class LogServiceImpl implements LogService {
 		return logDao.updateByPrimaryKey(record);
 	}
 
+	@Override
+	public int countAll() {
+		// TODO Auto-generated method stub
+		return logDao.countAll();
+	}
+
 }

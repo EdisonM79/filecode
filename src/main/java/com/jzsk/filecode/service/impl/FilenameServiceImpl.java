@@ -58,4 +58,10 @@ public class FilenameServiceImpl implements FilenameService {
 		return filenameDao.selectAllFilecode();
 	}
 
+	@Override
+	public int countAll() {
+		// TODO Auto-generated method stub
+		return filenameDao.countAll();
+	}
+
 }

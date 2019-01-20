@@ -60,7 +60,8 @@ public class FunctionController extends CommonController{
             // 什么都不做
         }       
     	List<TrFunction> functions = functionService.selectAllFunction();
-    	
+    	int count = functionService.countAll();
+    	modelMap.put("count", count);
     	modelMap.put("functions", functions);
          
     	return "functionlist";

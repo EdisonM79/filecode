@@ -21,4 +21,6 @@ public interface FunctionService {
     int updateByPrimaryKey(TrFunction record);
 
     List<TrFunction>selectAllFunction();
+    
+    int countAll();
 }

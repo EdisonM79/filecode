@@ -22,4 +22,6 @@ public interface FilenameService {
     int updateByPrimaryKey(TrFilename record);
     
     List<TrFilename> selectAllFilecode();
+    
+    int countAll();
 }

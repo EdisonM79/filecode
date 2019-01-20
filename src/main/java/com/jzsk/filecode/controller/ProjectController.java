@@ -76,6 +76,8 @@ public class ProjectController extends CommonController{
     		pjvalue.setProjectName(trProject.getProjectName());
     		projects.add(pjvalue);
 		} 	
+    	int count = projectService.countAll();
+    	modelMap.put("count", count);
     	modelMap.put("projects", projects);       
     	return "projectlist";
     	

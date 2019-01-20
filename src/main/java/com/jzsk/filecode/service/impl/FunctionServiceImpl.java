@@ -58,4 +58,10 @@ public class FunctionServiceImpl implements FunctionService {
 		return functionDao.selectAllFunction();
 	}
 
+	@Override
+	public int countAll() {
+		// TODO Auto-generated method stub
+		return functionDao.countAll();
+	}
+
 }

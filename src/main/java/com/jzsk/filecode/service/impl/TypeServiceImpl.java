@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jzsk.filecode.dao.FunctionDao;
 import com.jzsk.filecode.dao.TypeDao;
 import com.jzsk.filecode.model.entity.TrType;
 import com.jzsk.filecode.service.TypeService;
@@ -57,6 +56,12 @@ public class TypeServiceImpl implements TypeService {
 	public List<TrType> selectAllType() {
 		// TODO Auto-generated method stub
 		return typeDao.selectAllType();
+	}
+
+	@Override
+	public int countAll() {
+		// TODO Auto-generated method stub
+		return typeDao.countAll();
 	}
 
 }

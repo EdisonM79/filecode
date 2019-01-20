@@ -89,4 +89,10 @@ public class UserServiceImpl implements UserService {
 		
 		return user;
 	}
+
+	@Override
+	public int countAll() {
+		// TODO Auto-generated method stub
+		return userDao.countAll();
+	}
 }

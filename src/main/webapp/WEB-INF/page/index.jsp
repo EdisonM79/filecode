@@ -31,30 +31,20 @@
 <body>
 <header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
-		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">精准时空文件编号管理系统</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> 
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">精准时空文件编号管理系统</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">FileCode</a> 
 			<span class="logo navbar-slogan f-l mr-10 hidden-xs">v0.1</span> 
 			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
-			<!-- <nav class="nav navbar-nav">
-				<ul class="cl">
-					<li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
-						<ul class="dropDown-menu menu radius box-shadow">
-							<li><a href="javascript:;" onclick="article_add('添加资讯','article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
-							<li><a href="javascript:;" onclick="picture_add('添加资讯','picture-add.html')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
-							<li><a href="javascript:;" onclick="product_add('添加资讯','product-add.html')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
-							<li><a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav> -->
 		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 			<ul class="cl">
-				<li>超级管理员</li>
+				<li><c:if test = "${currentUser.role=='2'}">普通用户</c:if>
+					<c:if test = "${currentUser.role=='1'}">项目经理</c:if>
+					<c:if test = "${currentUser.role=='0'}">超级管理员</c:if></li>
 				<li class="dropDown dropDown_hover">
-					<a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+					<a href="#" class="dropDown_A">${currentUser.userName } <i class="Hui-iconfont">&#xe6d5;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
-						<li><a href="#">切换账户</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="javascript:changeUser();">切换账户</a></li>
+						<li><a href="javascript:logout();">退出</a></li>
 				</ul>
 			</li>
 				<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -76,22 +66,31 @@
 <aside class="Hui-aside">
 	<div class="menu_dropdown bk_2">
 		<dl id="menu-article">
-			<dt><i class="Hui-iconfont">&#xe616;</i> 文件管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe616;</i> 编号管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="文件名称" href="javascript:void(0)">文件名称</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="二级文件" href="javascript:void(0)">二级文件</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="二级文件表单" href="javascript:void(0)">二级文件表单</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="三级文件" href="javascript:void(0)">三级文件</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="三级文件表单" href="javascript:void(0)">三级文件表单</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="技术文件" href="javascript:void(0)">技术文件</a></li>
 			</ul>
 		</dd>
 	</dl> 
  		<dl id="menu-product">
+ 		<c:if test = "${currentUser.role!='2'}">
 			<dt><i class="Hui-iconfont">&#xe613;</i> 项目管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
+				  
 					<li><a data-href="${pageContext.request.contextPath}/admin/project/list" data-title="项目管理" href="javascript:void(0)">项目管理</a></li>
+			      
 			</ul>
 		</dd>
+		</c:if>
 	</dl>
 		<dl id="menu-product">
+			<c:if test = "${currentUser.role!='2'}">
 			<dt><i class="Hui-iconfont">&#xe620;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -100,6 +99,7 @@
 					<li><a data-href="${pageContext.request.contextPath}/admin/type/list" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
 			</ul>
 		</dd>
+		</c:if>
 	</dl> 
  <!--
 		<dl id="menu-comments">
@@ -211,7 +211,17 @@ function myselfinfo(){
 		content: '<div>管理员信息</div>'
 	});
 }
+function logout() {
+	layer.confirm("您确定要退出系统吗？", function() {
+		window.location.href="${pageContext.request.contextPath}/logout";
+	})
+}
 
+function changeUser() {
+	layer.confirm("您确定要退出并切换账号吗？", function() {
+		window.location.href="${pageContext.request.contextPath}/logout";
+	})
+}
 /*资讯-添加*/
 function article_add(title,url){
 	var index = layer.open({
