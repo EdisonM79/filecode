@@ -173,7 +173,7 @@ public class FilecodeController extends CommonController{
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings({ "unchecked" })
 	@RequestMapping(value = UrlConstants.ADMIN_FILECODE_SAVE, method = RequestMethod.POST)
 	public String saveFilecode(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, FilecodeForm filecodeForm) throws Exception {
 		// 设置response

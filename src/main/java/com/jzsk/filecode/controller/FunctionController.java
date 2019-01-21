@@ -16,19 +16,11 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.jzsk.filecode.constants.UrlConstants;
 import com.jzsk.filecode.controller.common.CommonController;
-import com.jzsk.filecode.model.entity.TrFilename;
 import com.jzsk.filecode.model.entity.TrFunction;
-import com.jzsk.filecode.model.entity.TrLogKey;
 import com.jzsk.filecode.model.form.FunctionForm;
-import com.jzsk.filecode.model.form.UserInfoForm;
-import com.jzsk.filecode.model.value.UserInfo;
-import com.jzsk.filecode.service.FilenameService;
 import com.jzsk.filecode.service.FunctionService;
-import com.jzsk.filecode.service.LogService;
 import com.jzsk.filecode.utility.FunctionIdUtility;
-import com.jzsk.filecode.utility.PasswordUtility;
 import com.jzsk.filecode.utility.ResponseUtility;
-import com.jzsk.filecode.utility.UserIdUtility;
 
 @Controller
 public class FunctionController extends CommonController{

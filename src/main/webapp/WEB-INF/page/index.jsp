@@ -69,8 +69,8 @@
 			<dt><i class="Hui-iconfont">&#xe616;</i> 编号管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="二级文件" href="javascript:void(0)">二级文件</a></li>
-					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="二级文件表单" href="javascript:void(0)">二级文件表单</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/two/list" data-title="二级文件" href="javascript:void(0)">二级文件</a></li>
+					<li><a data-href="${pageContext.request.contextPath}/admin/twotable/list" data-title="二级文件表单" href="javascript:void(0)">二级文件表单</a></li>
 					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="三级文件" href="javascript:void(0)">三级文件</a></li>
 					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="三级文件表单" href="javascript:void(0)">三级文件表单</a></li>
 					<li><a data-href="${pageContext.request.contextPath}/admin/filecode/list" data-title="技术文件" href="javascript:void(0)">技术文件</a></li>

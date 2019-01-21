@@ -70,4 +70,20 @@ public class UrlConstants {
 	/** 项目保存 */
 	public static final String ADMIN_PROJECT_SAVE = "/admin/project/save";
 	
+	/* 二级程序文件编号管理*/
+	/** 二级文件编号列表页 */
+	public static final String ADMIN_TWO_LIST = "/admin/two/list";
+	/** 二级文件编号添加页面 */
+	public static final String ADMIN_TWO_ADD = "/admin/two/add";
+	/** 二级文件编号保存 */
+	public static final String ADMIN_TWO_SAVE = "/admin/two/save";
+	
+	/* 二级程序文件表单编号管理*/
+	/** 二级文件表单编号列表页 */
+	public static final String ADMIN_TWOTABLE_LIST = "/admin/twotable/list";
+	/** 二级文件表单编号添加页面 */
+	public static final String ADMIN_TWOTABLE_ADD = "/admin/twotable/add";
+	/** 二级文件表单编号保存 */
+	public static final String ADMIN_TWOTABLE_SAVE = "/admin/twotable/save";
+	
 }
