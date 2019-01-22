@@ -86,4 +86,20 @@ public class UrlConstants {
 	/** 二级文件表单编号保存 */
 	public static final String ADMIN_TWOTABLE_SAVE = "/admin/twotable/save";
 	
+	/* 三级程序文件编号管理*/
+	/** 三级文件编号列表页 */
+	public static final String ADMIN_THREE_LIST = "/admin/three/list";
+	/** 三级文件编号添加页面 */
+	public static final String ADMIN_THREE_ADD = "/admin/three/add";
+	/** 三级文件编号保存 */
+	public static final String ADMIN_THREE_SAVE = "/admin/three/save";
+	
+	/* 三级程序文件表单编号管理*/
+	/** 三级文件表单编号列表页 */
+	public static final String ADMIN_THREETABLE_LIST = "/admin/threetable/list";
+	/** 三级文件表单编号添加页面 */
+	public static final String ADMIN_THREETABLE_ADD = "/admin/threetable/add";
+	/** 三级文件表单编号保存 */
+	public static final String ADMIN_THREETABLE_SAVE = "/admin/threetable/save";
+	
 }

@@ -18,11 +18,14 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.jzsk.filecode.constants.UrlConstants;
 import com.jzsk.filecode.controller.common.CommonController;
+import com.jzsk.filecode.model.entity.TrThree;
 import com.jzsk.filecode.model.entity.TrTwo;
+import com.jzsk.filecode.model.form.ThreeForm;
 import com.jzsk.filecode.model.form.TwoForm;
+import com.jzsk.filecode.model.value.ThreeValue;
 import com.jzsk.filecode.model.value.TwoValue;
 import com.jzsk.filecode.model.value.UserInfo;
-import com.jzsk.filecode.service.TwoService;
+import com.jzsk.filecode.service.ThreeService;
 import com.jzsk.filecode.service.UserService;
 import com.jzsk.filecode.utility.DateUtility;
 import com.jzsk.filecode.utility.ResponseUtility;
@@ -30,13 +33,12 @@ import com.jzsk.filecode.utility.StringUtility;
 import com.jzsk.filecode.utility.TwoIdUtility;
 
 @Controller
-public class TwoController extends CommonController{
+public class ThreeController extends CommonController{
 	
-
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private TwoService twoService;
+	private ThreeService threeService;
 	
 	
 	/**
@@ -47,7 +49,7 @@ public class TwoController extends CommonController{
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = UrlConstants.ADMIN_TWO_LIST)
+    @RequestMapping(value = UrlConstants.ADMIN_THREE_LIST)
     public String twoList(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
     	// map
         Map<String, Object> attrMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
@@ -62,26 +64,26 @@ public class TwoController extends CommonController{
         } catch (Exception e) {
             // 什么都不做
         }       
-    	List<TrTwo> trtwos = twoService.selectAllTwo();
-    	List<TwoValue> twoValues = new ArrayList<>();
-    	for (TrTwo trTwo : trtwos) {
+    	List<TrThree> trthrees = threeService.selectAllThree();
+    	List<ThreeValue> threeValues = new ArrayList<>();
+    	for (TrThree trThree : trthrees) {
     		
-    		TwoValue twoValue = new TwoValue();
-    		twoValue.setDepartment(trTwo.getDepartment());
-    		twoValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trTwo.getCreateTime()));
-    		twoValue.setFileName(trTwo.getFileName());
-    		twoValue.setTwoId(trTwo.getTwoId());
-    		twoValue.setTwoName(trTwo.getTwoName());
-    		twoValue.setUserId(trTwo.getUserId());
-    		twoValue.setVersion(trTwo.getVersion());
-    		twoValue.setYear(trTwo.getYear());
-    		twoValue.setUsername(userService.selectByPrimaryKey(trTwo.getUserId()).getUserName());
-    		twoValues.add(twoValue);
+    		ThreeValue threeValue = new ThreeValue();
+    		threeValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trThree.getCreateTime()));
+    		threeValue.setDepartment(trThree.getDepartment());
+    		threeValue.setThreeCode(trThree.getThreeCode());
+    		threeValue.setThreeId(trThree.getThreeId());
+    		threeValue.setThreeName(trThree.getThreeName());
+    		threeValue.setThreeNum(String.valueOf(trThree.getThreeNum()));
+    		threeValue.setTwoName(trThree.getTwoName());
+    		threeValue.setUserName(userService.selectByPrimaryKey(trThree.getUserId()).getUserName());
+    		threeValue.setThreeVersion(trThree.getThreeVersion());    		
+    		threeValues.add(threeValue);
 		} 	
-    	int count = twoService.countAll();
+    	int count = threeService.countAll();
     	modelMap.put("count", count);
-    	modelMap.put("twoValues", twoValues);       
-    	return "twolist";
+    	modelMap.put("threeValues", threeValues);       
+    	return "threelist";
     	
     }
     
@@ -94,7 +96,7 @@ public class TwoController extends CommonController{
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = UrlConstants.ADMIN_TWO_ADD)
+    @RequestMapping(value = UrlConstants.ADMIN_THREE_ADD)
     public String addFilecode(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
         // map
         Map<String, Object> attrMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
@@ -109,7 +111,7 @@ public class TwoController extends CommonController{
         } catch (Exception e) {
             // 什么都不做
         }                      
-        return "addtwo";
+        return "addthree";
     }
     
 	/**
@@ -122,8 +124,8 @@ public class TwoController extends CommonController{
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = UrlConstants.ADMIN_TWO_SAVE, method = RequestMethod.POST)
-	public String saveUser(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, TwoForm twoForm) throws Exception {
+	@RequestMapping(value = UrlConstants.ADMIN_THREE_SAVE, method = RequestMethod.POST)
+	public String saveUser(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, ThreeForm threeForm) throws Exception {
 		// 设置response
 		setResponseForJson(request, response);
 		// map
@@ -139,28 +141,42 @@ public class TwoController extends CommonController{
 		} catch (Exception e) {
 			// 什么都不做
 		}
-		TrTwo trTwo = new TrTwo();
+		TrThree trThree = new TrThree();
 		
-		trTwo.setTwoId(TwoIdUtility.generateTwoId());
-		trTwo.setCreateTime(DateUtility.getCurrentTimestamp());
-		trTwo.setDepartment(twoForm.getDepartment());
-		trTwo.setFileName(twoForm.getFileName());
-		//trTwo.setUserId(twoForm.getCreateUser());
-		trTwo.setVersion(twoForm.getVersion());
-		trTwo.setYear(twoForm.getYear());
-		String twoName = "JZ.2." + twoForm.getDepartment() + "-" + twoForm.getFileName() + twoForm.getVersion() + "-" + twoForm.getYear();
-		trTwo.setTwoName(twoName);
+		trThree.setCreateTime(DateUtility.getCurrentTimestamp());
+		trThree.setDepartment(threeForm.getDepartment());
+		trThree.setThreeId(TwoIdUtility.generateTwoId());
+		trThree.setThreeName(threeForm.getThreeName());
+		trThree.setThreeVersion(threeForm.getThreeVersion());
+		trThree.setTwoName(threeForm.getTwoName());
+		int threeNum = threeService.selectMaxByTwoName(threeForm.getTwoName()) + 1;
+		trThree.setThreeNum(threeNum);
+		
+		String numString =""; 
+		if (threeNum < 10 ) {
+			numString = "00"+ String.valueOf(threeNum);
+		} else if (threeNum > 10 && threeNum<100 ) {
+			numString = "0"+ String.valueOf(threeNum);
+		}else {
+			numString = String.valueOf(threeNum);
+		}
+		trThree.setThreeCode(numString);
+		
+		String threeCode = "JZ.3." + threeForm.getDepartment() + "." + numString 
+				+ threeForm.getThreeVersion()  + "-" + threeForm.getTwoName() + "-" + threeForm.getYear();
+		trThree.setThreeCode(threeCode);
+		
 		String createUserId = "";
-		if (StringUtility.isEmptyAfterTrim(twoForm.getCreateUser())) {
+		if (StringUtility.isEmptyAfterTrim(threeForm.getCreateUser())) {
 			HttpSession session = request.getSession();
 			UserInfo currentUser = (UserInfo)session.getAttribute("currentUser");
 			createUserId = currentUser.getUserId();
 		} else {
-			createUserId = twoForm.getCreateUser();
+			createUserId = threeForm.getCreateUser();
 		}
-		trTwo.setUserId(createUserId);
+		trThree.setUserId(createUserId);
 		
-		int resultTotal = twoService.insert(trTwo);
+		int resultTotal = threeService.insert(trThree);
         //检查ip地址
 		JSONObject result = new JSONObject();
 		if (resultTotal > 0)														// 操作成功

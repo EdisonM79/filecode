@@ -177,7 +177,7 @@
     where twotable_id = #{twotableId,jdbcType=VARCHAR}
   </update>
   <select id="selectAllTwotable" resultMap="BaseResultMap">
-		select * from twotable
+		SELECT * FROM twotable
 	</select>
 	<select id="countAll" resultType="java.lang.Integer">
 		SELECT count(*) FROM twotable
