@@ -24,5 +24,7 @@ public interface TwotableService {
     
     int countAll();
     
-    int selectMaxByTwoId(String twoId);
+    int selectMaxByTwoIdAndDepartment(TrTwotable trTwotable);
+    
+    List<TrTwotable> selectMaxByTwoIdAndDepartmentAndTableName(TrTwotable trTwotable);
 }

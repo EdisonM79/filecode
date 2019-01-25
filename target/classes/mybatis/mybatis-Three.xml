@@ -9,15 +9,15 @@
 		<result column="department" property="department" jdbcType="VARCHAR" />
 		<result column="two_name" property="twoName" jdbcType="VARCHAR" />
 		<result column="three_num" property="threeNum" jdbcType="INTEGER" />
-		<result column="three_version" property="threeVersion"
-			jdbcType="VARCHAR" />
+		<result column="three_version" property="threeVersion" jdbcType="VARCHAR" />
 		<result column="three_name" property="threeName" jdbcType="VARCHAR" />
 		<result column="three_code" property="threeCode" jdbcType="VARCHAR" />
 		<result column="user_id" property="userId" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		three_id, department, two_name, three_num, three_version, three_name,
+		three_id, department, two_name, three_num, three_version,
+		three_name,
 		three_code,
 		user_id, create_time
 	</sql>
@@ -33,14 +33,19 @@
 		where three_id = #{threeId,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.jzsk.filecode.model.entity.TrThree">
-		insert into three (three_id, department, two_name,
+		insert into three (three_id,
+		department, two_name,
 		three_num, three_version, three_name,
-		three_code, user_id, create_time
+		three_code,
+		user_id, create_time
 		)
-		values (#{threeId,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
+		values (#{threeId,jdbcType=VARCHAR},
+		#{department,jdbcType=VARCHAR},
 		#{twoName,jdbcType=VARCHAR},
-		#{threeNum,jdbcType=INTEGER}, #{threeVersion,jdbcType=VARCHAR}, #{threeName,jdbcType=VARCHAR},
-		#{threeCode,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		#{threeNum,jdbcType=INTEGER}, #{threeVersion,jdbcType=VARCHAR},
+		#{threeName,jdbcType=VARCHAR},
+		#{threeCode,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},
 		#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
@@ -137,7 +142,8 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.jzsk.filecode.model.entity.TrThree">
 		update three
-		set department = #{department,jdbcType=VARCHAR},
+		set
+		department = #{department,jdbcType=VARCHAR},
 		two_name = #{twoName,jdbcType=VARCHAR},
 		three_num = #{threeNum,jdbcType=INTEGER},
 		three_version = #{threeVersion,jdbcType=VARCHAR},
@@ -154,7 +160,16 @@
 	<select id="countAll" resultType="java.lang.Integer">
 		SELECT count(*) FROM three
 	</select>
-	<select id="selectMaxByTwoName" resultType="java.lang.Integer" parameterType="java.lang.String" >
-		SELECT IFNULL(MAX(three_num),0) FROM three WHERE two_name = #{twoName,jdbcType=VARCHAR}
+	<select id="selectMaxByTwoNameAndDepartment" resultType="java.lang.Integer" parameterType="com.jzsk.filecode.model.entity.TrThree">
+		SELECT IFNULL(MAX(three_num),0) FROM
+		three WHERE two_name = #{twoName,jdbcType=VARCHAR}
+		AND department = #{department,jdbcType=VARCHAR}
+	</select>	
+	<select id="selectMaxByTwoNameAndDepartmentAndTableName"
+		resultMap="BaseResultMap" parameterType="com.jzsk.filecode.model.entity.TrThree">
+		SELECT * FROM three WHERE three_name = #{threeName,jdbcType=VARCHAR}
+		AND two_name = #{twoName,jdbcType=VARCHAR}
+		AND department = #{department,jdbcType=VARCHAR}
+		ORDER BY three_version DESC
 	</select>
 </mapper>

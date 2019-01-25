@@ -63,13 +63,19 @@ public class TwotableServiceImpl implements com.jzsk.filecode.service.TwotableSe
 	}
 
 	@Override
-	public int selectMaxByTwoId(String twoId) {
+	public int selectMaxByTwoIdAndDepartment(TrTwotable trTwotable) {
 		// TODO Auto-generated method stub
-		Integer max = twotableDao.selectMaxByTwoId(twoId);
+		Integer max = twotableDao.selectMaxByTwoIdAndDepartment(trTwotable);
 		if (max == null) {
-			max = 001;
+			max = 000;
 		}
 		return max;
+	}
+
+	@Override
+	public List<TrTwotable> selectMaxByTwoIdAndDepartmentAndTableName(TrTwotable trTwotable) {
+		// TODO Auto-generated method stub
+		return twotableDao.selectMaxByTwoIdAndDepartmentAndTableName(trTwotable);
 	}
 
 }

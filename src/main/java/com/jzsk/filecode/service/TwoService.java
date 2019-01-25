@@ -26,4 +26,7 @@ public interface TwoService {
     
     int countAll();
 
+    List<TrTwo> selectAllByFilenameAndDepartmentAndYear(TrTwo trTwo);
+    
+    int selectMaxByYearAndDepartment(TrTwo trTwo);
 }

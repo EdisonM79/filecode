@@ -55,6 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th width="60">ID</th>
 					<th width="60">部门</th>
 					<th width="80">文件名称</th>
+					<th width="80">序号</th>
 					<th width="80">版本号</th>
 					<th width="80">发布年份</th>
 					<th width="80">编号名</th>
@@ -76,38 +77,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<c:if test="${two.department=='ZH'}">综合部</c:if>
 						<c:if test="${two.department=='YX'}">营销部</c:if>
 					</td>
-					<td>
-						<c:if test="${two.fileName=='001'}">公司质量责任制</c:if>
-						<c:if test="${two.fileName=='002'}">风险管理程序</c:if>
-						<c:if test="${two.fileName=='003'}">人力资源管理程序</c:if>
-						<c:if test="${two.fileName=='004'}">基础设施控制程序</c:if>
-						<c:if test="${two.fileName=='005'}">过程运行环境控制程序</c:if>
-						<c:if test="${two.fileName=='006'}">监视和测量设备控制程序</c:if>
-						<c:if test="${two.fileName=='007'}">知识管理</c:if>
-						<c:if test="${two.fileName=='008'}">文件控制程序</c:if>
-						<c:if test="${two.fileName=='009'}">记录控制程序</c:if>
-						<c:if test="${two.fileName=='010'}">质量信息控制程序</c:if>
-						<c:if test="${two.fileName=='011'}">顾客需求管理程序</c:if>
-						<c:if test="${two.fileName=='012'}">设计开发和新产品试制程序</c:if>
-						<c:if test="${two.fileName=='013'}">设计和开发的试验控制程序</c:if>
-						<c:if test="${two.fileName=='014'}">技术状态管理程序</c:if>
-						<c:if test="${two.fileName=='015'}">采购程序</c:if>
-						<c:if test="${two.fileName=='016'}">供方管理程序</c:if>
-						<c:if test="${two.fileName=='017'}">计量、试验外包方控制程序</c:if>
-						<c:if test="${two.fileName=='018'}">外部运输方控制程序</c:if>
-						<c:if test="${two.fileName=='019'}">生产和服务提供控制程序</c:if>
-						<c:if test="${two.fileName=='020'}">关键特殊过程控制程序</c:if>
-						<c:if test="${two.fileName=='021'}">产品放行程序</c:if>
-						<c:if test="${two.fileName=='022'}">不合格品控制程序</c:if>
-						<c:if test="${two.fileName=='023'}">顾客满意度的监视和测量程序</c:if>
-						<c:if test="${two.fileName=='024'}">内部审核控制程序</c:if>
-						<c:if test="${two.fileName=='025'}">管理评审控制程序</c:if>
-						<c:if test="${two.fileName=='026'}">纠正、改进程序</c:if>
-						<c:if test="${two.fileName=='000'}">无程序文件</c:if>
-					</td>
+					<td>${two.fileName}</td>
+					<td>${two.twoNum}</td>
 					<td>${two.version}</td>
 					<td>${two.year}</td>
-					<td>${two.twoName}</td>
+					<td>${two.twoCode}</td>
 					<td>${two.username}</td>
 					<td>${two.createTime}</td>
 					<td class="f-14 td-manage">

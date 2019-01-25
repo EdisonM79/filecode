@@ -76,35 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<c:if test="${twotable.department=='ZH'}">综合部</c:if>
 						<c:if test="${twotable.department=='YX'}">营销部</c:if>
 					</td>
-					<td>
-						<c:if test="${twotable.twoName=='001'}">公司质量责任制</c:if>
-						<c:if test="${twotable.twoName=='002'}">风险管理程序</c:if>
-						<c:if test="${twotable.twoName=='003'}">人力资源管理程序</c:if>
-						<c:if test="${twotable.twoName=='004'}">基础设施控制程序</c:if>
-						<c:if test="${twotable.twoName=='005'}">过程运行环境控制程序</c:if>
-						<c:if test="${twotable.twoName=='006'}">监视和测量设备控制程序</c:if>
-						<c:if test="${twotable.twoName=='007'}">知识管理</c:if>
-						<c:if test="${twotable.twoName=='008'}">文件控制程序</c:if>
-						<c:if test="${twotable.twoName=='009'}">记录控制程序</c:if>
-						<c:if test="${twotable.twoName=='010'}">质量信息控制程序</c:if>
-						<c:if test="${twotable.twoName=='011'}">顾客需求管理程序</c:if>
-						<c:if test="${twotable.twoName=='012'}">设计开发和新产品试制程序</c:if>
-						<c:if test="${twotable.twoName=='013'}">设计和开发的试验控制程序</c:if>
-						<c:if test="${twotable.twoName=='014'}">技术状态管理程序</c:if>
-						<c:if test="${twotable.twoName=='015'}">采购程序</c:if>
-						<c:if test="${twotable.twoName=='016'}">供方管理程序</c:if>
-						<c:if test="${twotable.twoName=='017'}">计量、试验外包方控制程序</c:if>
-						<c:if test="${twotable.twoName=='018'}">外部运输方控制程序</c:if>
-						<c:if test="${twotable.twoName=='019'}">生产和服务提供控制程序</c:if>
-						<c:if test="${twotable.twoName=='020'}">关键特殊过程控制程序</c:if>
-						<c:if test="${twotable.twoName=='021'}">产品放行程序</c:if>
-						<c:if test="${twotable.twoName=='022'}">不合格品控制程序</c:if>
-						<c:if test="${twotable.twoName=='023'}">顾客满意度的监视和测量程序</c:if>
-						<c:if test="${twotable.twoName=='024'}">内部审核控制程序</c:if>
-						<c:if test="${twotable.twoName=='025'}">管理评审控制程序</c:if>
-						<c:if test="${twotable.twoName=='026'}">纠正、改进程序</c:if>
-						<c:if test="${twotable.twoName=='000'}">无程序文件</c:if>
-					</td>
+					<td>${twotable.twoName}</td>
 					<td>${twotable.tableNum}</td>
 					<td>${twotable.tableVersion}</td>
 					<td>${twotable.tableCode}</td>
@@ -127,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <script type="text/javascript">
 $('.table-sort').dataTable({
-	"aaSorting": [[ 7, "desc" ]],//默认第几个排序
+	"aaSorting": [[ 8, "desc" ]],//默认第几个排序
 	"bStateSave": true,//状态保存
 	"aoColumnDefs": [
 	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示

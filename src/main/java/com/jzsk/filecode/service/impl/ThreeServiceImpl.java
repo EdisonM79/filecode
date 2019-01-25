@@ -64,9 +64,15 @@ public class ThreeServiceImpl implements ThreeService {
 	}
 
 	@Override
-	public int selectMaxByTwoName(String twoName) {
+	public int selectMaxByTwoNameAndDepartment(TrThree trThree) {
 		// TODO Auto-generated method stub
-		return threedao.selectMaxByTwoName(twoName);
+		return threedao.selectMaxByTwoNameAndDepartment(trThree);
+	}
+
+	@Override
+	public List<TrThree> selectMaxByTwoNameAndDepartmentAndTableName(TrThree trThree) {
+		// TODO Auto-generated method stub
+		return threedao.selectMaxByTwoNameAndDepartmentAndTableName(trThree);
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.jzsk.filecode.model.form;
 
-import java.util.Date;
-
 public class ThreeForm {
 
 	private String createUser;

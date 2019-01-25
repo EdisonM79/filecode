@@ -71,11 +71,12 @@ public class TwoController extends CommonController{
     		twoValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trTwo.getCreateTime()));
     		twoValue.setFileName(trTwo.getFileName());
     		twoValue.setTwoId(trTwo.getTwoId());
-    		twoValue.setTwoName(trTwo.getTwoName());
+    		twoValue.setTwoCode(trTwo.getTwoCode());
     		twoValue.setUserId(trTwo.getUserId());
     		twoValue.setVersion(trTwo.getVersion());
     		twoValue.setYear(trTwo.getYear());
     		twoValue.setUsername(userService.selectByPrimaryKey(trTwo.getUserId()).getUserName());
+    		twoValue.setTwoNum(String.valueOf(trTwo.getTwoNum()));
     		twoValues.add(twoValue);
 		} 	
     	int count = twoService.countAll();
@@ -113,7 +114,7 @@ public class TwoController extends CommonController{
     }
     
 	/**
-	 * 
+	 * 保存二级文件编号
 	 * @param response
 	 * @param request
 	 * @param modelMap
@@ -123,7 +124,7 @@ public class TwoController extends CommonController{
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = UrlConstants.ADMIN_TWO_SAVE, method = RequestMethod.POST)
-	public String saveUser(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, TwoForm twoForm) throws Exception {
+	public String saveTwo(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, TwoForm twoForm) throws Exception {
 		// 设置response
 		setResponseForJson(request, response);
 		// map
@@ -139,18 +140,21 @@ public class TwoController extends CommonController{
 		} catch (Exception e) {
 			// 什么都不做
 		}
-		TrTwo trTwo = new TrTwo();
-		
-		trTwo.setTwoId(TwoIdUtility.generateTwoId());
-		trTwo.setCreateTime(DateUtility.getCurrentTimestamp());
+		TrTwo trTwo = new TrTwo();	
+		//年份，部门和时间可以确定文件编号的唯一性
+		//trTwo.setTwoId(TwoIdUtility.generateTwoId());
+		//trTwo.setCreateTime(DateUtility.getCurrentTimestamp());
 		trTwo.setDepartment(twoForm.getDepartment());
 		trTwo.setFileName(twoForm.getFileName());
 		//trTwo.setUserId(twoForm.getCreateUser());
-		trTwo.setVersion(twoForm.getVersion());
+		//trTwo.setVersion(twoForm.getVersion());
 		trTwo.setYear(twoForm.getYear());
-		String twoName = "JZ.2." + twoForm.getDepartment() + "-" + twoForm.getFileName() + twoForm.getVersion() + "-" + twoForm.getYear();
-		trTwo.setTwoName(twoName);
+		
+		List<TrTwo> trTwoBySelectList = twoService.selectAllByFilenameAndDepartmentAndYear(trTwo);
+		TrTwo trTwoBySelect;
 		String createUserId = "";
+		String twoCode = "";
+		int resultTotal = 0;
 		if (StringUtility.isEmptyAfterTrim(twoForm.getCreateUser())) {
 			HttpSession session = request.getSession();
 			UserInfo currentUser = (UserInfo)session.getAttribute("currentUser");
@@ -158,10 +162,49 @@ public class TwoController extends CommonController{
 		} else {
 			createUserId = twoForm.getCreateUser();
 		}
-		trTwo.setUserId(createUserId);
-		
-		int resultTotal = twoService.insert(trTwo);
-        //检查ip地址
+		if (trTwoBySelectList.isEmpty()) {
+			//用文件名、部门和年份查询没有结果，表明此文件编号为新增
+			trTwo.setTwoNum(twoService.selectMaxByYearAndDepartment(trTwo) + 1);
+			trTwo.setVersion(twoForm.getVersion());
+			trTwo.setCreateTime(DateUtility.getCurrentTimestamp());
+			trTwo.setTwoId(TwoIdUtility.generateTwoId());
+			String currentNum = String.valueOf(twoService.selectMaxByYearAndDepartment(trTwo) + 1);
+			if (currentNum.length() != 3) {
+				currentNum = "0" + currentNum;
+			}
+			if (currentNum.length() != 3) {
+				currentNum = "0" + currentNum;
+			}
+			twoCode = "JZ.2." + twoForm.getDepartment() + "-" + currentNum + twoForm.getVersion() + "-" + twoForm.getYear();
+			trTwo.setTwoCode(twoCode);
+			trTwo.setUserId(createUserId);			
+			resultTotal = twoService.insert(trTwo);
+		} else {
+			//查询有结果，表明此文件编号为版本号的更新
+			for (TrTwo trTwo2 : trTwoBySelectList) {
+				if (trTwo2.getVersion() == twoForm.getVersion()) {
+					resultTotal = -1; //直接报操作失败
+				} 
+			}
+			//版本号为新版
+			if (resultTotal != -1) {
+				trTwoBySelect = trTwoBySelectList.get(0);
+				trTwoBySelect.setTwoId(TwoIdUtility.generateTwoId());
+				trTwoBySelect.setCreateTime(DateUtility.getCurrentTimestamp());
+				trTwoBySelect.setUserId(createUserId);
+				String currentNum = String.valueOf(trTwoBySelect.getTwoNum());
+				if (currentNum.length() != 3) {
+					currentNum = "0" + currentNum;
+				}
+				if (currentNum.length() != 3) {
+					currentNum = "0" + currentNum;
+				}
+				twoCode = "JZ.2." + twoForm.getDepartment() + "-" + currentNum + twoForm.getVersion() + "-" + twoForm.getYear();
+				trTwoBySelect.setTwoCode(twoCode);
+				trTwoBySelect.setVersion(twoForm.getVersion());
+				resultTotal = twoService.insert(trTwoBySelect);
+			}
+		}		
 		JSONObject result = new JSONObject();
 		if (resultTotal > 0)														// 操作成功
         {

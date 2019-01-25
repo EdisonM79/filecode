@@ -3,7 +3,7 @@ package com.jzsk.filecode.model.form;
 public class TwotableForm {
 
 	private String department;
-	private String twoName;
+	private String twoId;
 	private String tableVersion;
 	private String tableName;
 	private String createUser;
@@ -16,12 +16,12 @@ public class TwotableForm {
 		this.department = department;
 	}
 
-	public String getTwoName() {
-		return twoName;
+	public String getTwoId() {
+		return twoId;
 	}
 
-	public void setTwoName(String twoName) {
-		this.twoName = twoName;
+	public void setTwoId(String twoId) {
+		this.twoId = twoId;
 	}
 
 	public String getTableVersion() {

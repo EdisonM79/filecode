@@ -5,13 +5,13 @@ public class TwoValue {
 	private String twoId;
 	private String department;
 	private String fileName;
+	private String twoNum;
 	private String version;
 	private String year;
-	private String twoName;
+	private String twoCode;
 	private String createTime;
 	private String userId;
 	private String username;
-
 
 	public String getTwoId() {
 		return twoId;
@@ -37,6 +37,14 @@ public class TwoValue {
 		this.fileName = fileName;
 	}
 
+	public String getTwoNum() {
+		return twoNum;
+	}
+
+	public void setTwoNum(String twoNum) {
+		this.twoNum = twoNum;
+	}
+
 	public String getVersion() {
 		return version;
 	}
@@ -53,12 +61,12 @@ public class TwoValue {
 		this.year = year;
 	}
 
-	public String getTwoName() {
-		return twoName;
+	public String getTwoCode() {
+		return twoCode;
 	}
 
-	public void setTwoName(String twoName) {
-		this.twoName = twoName;
+	public void setTwoCode(String twoCode) {
+		this.twoCode = twoCode;
 	}
 
 	public String getCreateTime() {
@@ -84,5 +92,5 @@ public class TwoValue {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 }

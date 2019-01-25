@@ -62,4 +62,16 @@ public class TwoServiceImpl implements TwoService {
 		return twodao.countAll();
 	}
 
+	@Override
+	public List<TrTwo> selectAllByFilenameAndDepartmentAndYear(TrTwo trTwo) {
+		// TODO Auto-generated method stub
+		return twodao.selectAllByFilenameAndDepartmentAndYear(trTwo);
+	}
+
+	@Override
+	public int selectMaxByYearAndDepartment(TrTwo trTwo) {
+		// TODO Auto-generated method stub
+		return twodao.selectMaxByYearAndDepartment(trTwo);
+	}
+
 }

@@ -22,5 +22,7 @@ public interface TwotableDao {
     
     int countAll();
     
-    Integer selectMaxByTwoId(String twoId);
+    Integer selectMaxByTwoIdAndDepartment(TrTwotable trTwotable);
+    
+    List<TrTwotable> selectMaxByTwoIdAndDepartmentAndTableName(TrTwotable trTwotable);
 }

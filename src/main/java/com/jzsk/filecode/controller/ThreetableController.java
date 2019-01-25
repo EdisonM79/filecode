@@ -52,8 +52,8 @@ public class ThreetableController extends CommonController{
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = UrlConstants.ADMIN_TWOTABLE_LIST)
-    public String twoList(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
+    @RequestMapping(value = UrlConstants.ADMIN_THREETABLE_LIST)
+    public String threeeList(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
     	// map
         Map<String, Object> attrMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
         try {
@@ -74,36 +74,37 @@ public class ThreetableController extends CommonController{
     		ThreetableValue threetableValue = new ThreetableValue();
     		
     		threetableValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trThreetable.getCreateTime()));
-    		threetableValue.setThreeName(trThreetable.getThreeName());
-    		threetableValue.setThreetableCode(trThreetable.getThreetableCode());
-    		threetableValue.setThreetableId(trThreetable.getThreetableId());
-    		threetableValue.setThreetableName(threetableName);
-    		
-    		twotableValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trTwotable.getCreateTime()));
-    		twotableValue.setDepartment(trTwotable.getDepartment());
-    		twotableValue.setTableName(trTwotable.getTableName());
-    		int num = trTwotable.getTableNum();
-    		String numString =""; 
-    		if (num < 10 ) {
-    			numString = "00"+ String.valueOf(num);
-			} else if (num > 10 && num<100 ) {
-    			numString = "0"+ String.valueOf(num);
-			}else {
-				numString = String.valueOf(num);
-			}
-    		
-    		twotableValue.setTableNum(numString);
-    		twotableValue.setTableVersion(trTwotable.getTableVersion());
-    		twotableValue.setTwoName(trTwotable.getTwoId());
-    		twotableValue.setTwotableId(trTwotable.getTwotableId());
-    		twotableValue.setUsername(userService.selectByPrimaryKey(trTwotable.getUserId()).getUserName());
-    		twotableValue.setTableCode(trTwotable.getTableCode());
-    		twotableValues.add(twotableValue);
+    		threetableValue.setThreeName(trThreetable.getThreeNum());
+//    		threetableValue.setThreeName(trThreetable.getThreeNum());
+//    		threetableValue.setThreetableCode(trThreetable.getThreetableCode());
+//    		threetableValue.setThreetableId(trThreetable.getThreetableId());
+//    		threetableValue.setThreetableName(threetableName);
+//    		
+//    		twotableValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trTwotable.getCreateTime()));
+//    		twotableValue.setDepartment(trTwotable.getDepartment());
+//    		twotableValue.setTableName(trTwotable.getTableName());
+//    		int num = trTwotable.getTableNum();
+//    		String numString =""; 
+//    		if (num < 10 ) {
+//    			numString = "00"+ String.valueOf(num);
+//			} else if (num > 10 && num<100 ) {
+//    			numString = "0"+ String.valueOf(num);
+//			}else {
+//				numString = String.valueOf(num);
+//			}
+//    		
+//    		twotableValue.setTableNum(numString);
+//    		twotableValue.setTableVersion(trTwotable.getTableVersion());
+//    		twotableValue.setTwoName(trTwotable.getTwoId());
+//    		twotableValue.setTwotableId(trTwotable.getTwotableId());
+//    		twotableValue.setUsername(userService.selectByPrimaryKey(trTwotable.getUserId()).getUserName());
+//    		twotableValue.setTableCode(trTwotable.getTableCode());
+//    		twotableValues.add(twotableValue);
 		} 	
-    	int count = twotableService.countAll();
-    	modelMap.put("count", count);
-    	modelMap.put("twotableValues", twotableValues);       
-    	return "twotablelist";
+//    	int count = twotableService.countAll();
+//    	modelMap.put("count", count);
+//    	modelMap.put("twotableValues", twotableValues);       
+    	return null;
     	
     }
     
@@ -116,7 +117,7 @@ public class ThreetableController extends CommonController{
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = UrlConstants.ADMIN_TWOTABLE_ADD)
+    @RequestMapping(value = UrlConstants.ADMIN_THREETABLE_ADD)
     public String addFilecode(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
         // map
         Map<String, Object> attrMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
@@ -131,7 +132,7 @@ public class ThreetableController extends CommonController{
         } catch (Exception e) {
             // 什么都不做
         }                      
-        return "addtwotable";
+        return "addthreetable";
     }
     
 	/**
@@ -144,8 +145,8 @@ public class ThreetableController extends CommonController{
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = UrlConstants.ADMIN_TWOTABLE_SAVE, method = RequestMethod.POST)
-	public String saveUser(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, TwotableForm twotableForm) throws Exception {
+	@RequestMapping(value = UrlConstants.ADMIN_THREETABLE_SAVE, method = RequestMethod.POST)
+	public String saveThree(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, TwotableForm twotableForm) throws Exception {
 		// 设置response
 		setResponseForJson(request, response);
 		// map
@@ -169,7 +170,7 @@ public class ThreetableController extends CommonController{
 		trTwotable.setTableVersion(twotableForm.getTableVersion());
 		trTwotable.setTwoId(twotableForm.getTwoName());
 		trTwotable.setTwotableId(TwoIdUtility.generateTwoId());
-		Integer tableNum = twotableService.selectMaxByTwoId(twotableForm.getTwoName());
+		Integer tableNum = 0;
 		tableNum++;
 		trTwotable.setTableNum(tableNum);
 		

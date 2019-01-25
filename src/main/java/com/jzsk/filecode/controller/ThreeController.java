@@ -149,23 +149,37 @@ public class ThreeController extends CommonController{
 		trThree.setThreeName(threeForm.getThreeName());
 		trThree.setThreeVersion(threeForm.getThreeVersion());
 		trThree.setTwoName(threeForm.getTwoName());
-		int threeNum = threeService.selectMaxByTwoName(threeForm.getTwoName()) + 1;
-		trThree.setThreeNum(threeNum);
 		
-		String numString =""; 
-		if (threeNum < 10 ) {
-			numString = "00"+ String.valueOf(threeNum);
-		} else if (threeNum > 10 && threeNum<100 ) {
-			numString = "0"+ String.valueOf(threeNum);
-		}else {
-			numString = String.valueOf(threeNum);
+		List<TrThree> trThreeBySelectList = threeService.selectMaxByTwoNameAndDepartmentAndTableName(trThree);
+		TrThree trThreeBySelect = null;
+		int threeNum = 0;
+		if (trThreeBySelectList.isEmpty()) {
+			//以前没有记录，新生成
+			
+			threeNum = threeService.selectMaxByTwoNameAndDepartment(trThree) + 1;
+			trThree.setThreeNum(threeNum);
+			
+			String numString =""; 
+			if (threeNum < 10 ) {
+				numString = "00"+ String.valueOf(threeNum);
+			} else if (threeNum > 10 && threeNum<100 ) {
+				numString = "0"+ String.valueOf(threeNum);
+			}else {
+				numString = String.valueOf(threeNum);
+			}
+			String threeCode = "JZ.3." + threeForm.getDepartment() + "." + numString 
+					+ threeForm.getThreeVersion()  + "-" + threeForm.getTwoName() + "-" + threeForm.getYear();
+			trThree.setThreeCode(threeCode);
+		} else {
+			//以前有记录，修改版本号
+			trThreeBySelect = trThreeBySelectList.get(0);
+			trThreeBySelect.setThreeVersion(threeForm.getThreeVersion());
+			trThreeBySelect.setCreateTime(DateUtility.getCurrentTimestamp());
+			String threeCode = trThreeBySelect.getThreeCode();
+			threeCode = threeCode.substring(0,threeCode.length()-2);
+			threeCode += threeForm.getThreeVersion();
+			trThreeBySelect.setThreeCode(threeCode);
 		}
-		trThree.setThreeCode(numString);
-		
-		String threeCode = "JZ.3." + threeForm.getDepartment() + "." + numString 
-				+ threeForm.getThreeVersion()  + "-" + threeForm.getTwoName() + "-" + threeForm.getYear();
-		trThree.setThreeCode(threeCode);
-		
 		String createUserId = "";
 		if (StringUtility.isEmptyAfterTrim(threeForm.getCreateUser())) {
 			HttpSession session = request.getSession();

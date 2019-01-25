@@ -21,4 +21,8 @@ public interface TwoDao {
     List<TrTwo> selectAllTwo();
     
     int countAll();
+    
+    List<TrTwo> selectAllByFilenameAndDepartmentAndYear(TrTwo trTwo);
+    
+    int selectMaxByYearAndDepartment(TrTwo trTwo);
 }

@@ -18,10 +18,13 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.jzsk.filecode.constants.UrlConstants;
 import com.jzsk.filecode.controller.common.CommonController;
+import com.jzsk.filecode.model.entity.TrTwo;
 import com.jzsk.filecode.model.entity.TrTwotable;
 import com.jzsk.filecode.model.form.TwotableForm;
+import com.jzsk.filecode.model.value.TwoValue;
 import com.jzsk.filecode.model.value.TwotableValue;
 import com.jzsk.filecode.model.value.UserInfo;
+import com.jzsk.filecode.service.TwoService;
 import com.jzsk.filecode.service.TwotableService;
 import com.jzsk.filecode.service.UserService;
 import com.jzsk.filecode.utility.DateUtility;
@@ -36,6 +39,8 @@ public class TwotableController extends CommonController{
 	private UserService userService;
 	@Autowired
 	private TwotableService twotableService;
+	@Autowired
+	private TwoService twoService;
 	
 	
 	/**
@@ -79,10 +84,9 @@ public class TwotableController extends CommonController{
 			}else {
 				numString = String.valueOf(num);
 			}
-    		
     		twotableValue.setTableNum(numString);
     		twotableValue.setTableVersion(trTwotable.getTableVersion());
-    		twotableValue.setTwoName(trTwotable.getTwoId());
+    		twotableValue.setTwoName(twoService.selectByPrimaryKey(trTwotable.getTwoId()).getFileName());
     		twotableValue.setTwotableId(trTwotable.getTwotableId());
     		twotableValue.setUsername(userService.selectByPrimaryKey(trTwotable.getUserId()).getUserName());
     		twotableValue.setTableCode(trTwotable.getTableCode());
@@ -118,7 +122,17 @@ public class TwotableController extends CommonController{
             }
         } catch (Exception e) {
             // 什么都不做
-        }                      
+        }  
+        List<TrTwo> twoValues = twoService.selectAllTwo(); 
+        List<TwoValue> twos = new ArrayList<>();
+        for (TrTwo trTwo : twoValues) {
+        	TwoValue twoValue = new TwoValue();
+        	twoValue.setFileName(trTwo.getFileName());
+        	twoValue.setTwoId(trTwo.getTwoId());
+        	twoValue.setVersion(trTwo.getVersion());
+        	twos.add(twoValue);
+		}
+        modelMap.put("twos", twos);
         return "addtwotable";
     }
     
@@ -133,7 +147,7 @@ public class TwotableController extends CommonController{
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = UrlConstants.ADMIN_TWOTABLE_SAVE, method = RequestMethod.POST)
-	public String saveUser(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, TwotableForm twotableForm) throws Exception {
+	public String saveTwoTable(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, TwotableForm twotableForm) throws Exception {
 		// 设置response
 		setResponseForJson(request, response);
 		// map
@@ -155,25 +169,46 @@ public class TwotableController extends CommonController{
 		trTwotable.setDepartment(twotableForm.getDepartment());
 		trTwotable.setTableName(twotableForm.getTableName());
 		trTwotable.setTableVersion(twotableForm.getTableVersion());
-		trTwotable.setTwoId(twotableForm.getTwoName());
-		trTwotable.setTwotableId(TwoIdUtility.generateTwoId());
-		Integer tableNum = twotableService.selectMaxByTwoId(twotableForm.getTwoName());
-		tableNum++;
-		trTwotable.setTableNum(tableNum);
+		trTwotable.setTwoId(twotableForm.getTwoId());
+		//trTwotable.setTwotableId(TwoIdUtility.generateTwoId());
 		
-		int num = tableNum;
-		String numString =""; 
-		if (num < 10 ) {
-			numString = "00"+ String.valueOf(num);
-		} else if (num > 10 && num<100 ) {
-			numString = "0"+ String.valueOf(num);
-		}else {
-			numString = String.valueOf(num);
+		List<TrTwotable> trTwotableBySelectList = twotableService.selectMaxByTwoIdAndDepartmentAndTableName(trTwotable);
+		TrTwotable trTwotableBySelect = null;
+		
+		if (trTwotableBySelectList.isEmpty()) {
+			//此处是没有找到以前的，所以为新增,先找到本程序文件下，本部门，使用的最大文件序号
+			Integer tableNum = twotableService.selectMaxByTwoIdAndDepartment(trTwotable);
+			tableNum++; //最大文件序号加1
+			trTwotable.setTableNum(tableNum);
+			String numString = String.valueOf(tableNum); 
+			if (numString.length() != 2 ) {
+				numString = "0"+ numString;
+			} 
+			String two_num = String.valueOf(twoService.selectByPrimaryKey(twotableForm.getTwoId()).getTwoNum());
+			if (two_num.length() != 3) {
+				two_num = "0" + two_num;
+			}
+			if (two_num.length() != 3) {
+				two_num = "0" + two_num;
+			}
+			//拼凑表达编号
+			String tableCode = "JZ.2."+twotableForm.getDepartment()+two_num+"-"+numString+twotableForm.getTableVersion();
+			trTwotable.setTableCode(tableCode);	
+		} else {
+			trTwotableBySelect = trTwotableBySelectList.get(0);
+			//此处是找到了以前的，所以当前操作为更新文档version
+			trTwotableBySelect.setTableVersion(twotableForm.getTableVersion());
+			String tableCode = trTwotableBySelect.getTableCode();
+			//去掉最后两位的版本号
+			tableCode = tableCode.substring(0, tableCode.length()-2);
+			//再加上最后的两位版本号
+			tableCode += twotableForm.getTableVersion();
+			trTwotableBySelect.setTableCode(tableCode);   //更新表单编号
+			trTwotableBySelect.setCreateTime(DateUtility.getCurrentTimestamp());    //更新生成时间
+			trTwotableBySelect.setTwotableId(TwoIdUtility.generateTwoId());			//新增表单ID
 		}
-		
-		String tableCode = "JZ.2."+twotableForm.getDepartment()+twotableForm.getTwoName()+"-"+numString+twotableForm.getTableVersion();
-		trTwotable.setTableCode(tableCode);
 		String createUserId = "";
+		//使用FORM传过来的id，如果传过来为空，则使用session里面的值
 		if (StringUtility.isEmptyAfterTrim(twotableForm.getCreateUser())) {
 			HttpSession session = request.getSession();
 			UserInfo currentUser = (UserInfo)session.getAttribute("currentUser");
@@ -181,9 +216,17 @@ public class TwotableController extends CommonController{
 		} else {
 			createUserId = twotableForm.getCreateUser();
 		}
-		trTwotable.setUserId(createUserId);
 		
-		int resultTotal = twotableService.insert(trTwotable);
+		int resultTotal = 0;
+		if (trTwotableBySelectList.isEmpty()) {
+			trTwotable.setUserId(createUserId);
+			trTwotable.setTwotableId(TwoIdUtility.generateTwoId());
+			resultTotal = twotableService.insert(trTwotable);
+		} else {
+			trTwotableBySelect.setUserId(createUserId);
+			resultTotal = twotableService.insert(trTwotableBySelect);
+		}
+		
         //检查ip地址
 		JSONObject result = new JSONObject();
 		if (resultTotal > 0)														// 操作成功

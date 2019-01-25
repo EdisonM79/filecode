@@ -22,5 +22,7 @@ public interface ThreeDao {
     
     int countAll();
     
-    int selectMaxByTwoName(String twoName);
+    int selectMaxByTwoNameAndDepartment(TrThree trThree);
+    
+    List<TrThree> selectMaxByTwoNameAndDepartmentAndTableName(TrThree trThree);
 }
