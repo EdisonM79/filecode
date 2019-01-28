@@ -3,22 +3,21 @@
 <mapper namespace="com.jzsk.filecode.dao.ThreetableDao">
 	<resultMap id="BaseResultMap" type="com.jzsk.filecode.model.entity.TrThreetable">
 		<id column="threetable_id" property="threetableId" jdbcType="VARCHAR" />
-		<result column="three_num" property="threeNum" jdbcType="INTEGER" />
-		<result column="threetable_num" property="threetableNum"
-			jdbcType="INTEGER" />
-		<result column="threetable_version" property="threetableVersion"
-			jdbcType="VARCHAR" />
-		<result column="threetable_name" property="threetableName"
-			jdbcType="VARCHAR" />
-		<result column="threetable_code" property="threetableCode"
-			jdbcType="VARCHAR" />
+		<result column="department" property="department" jdbcType="VARCHAR" />
+		<result column="three_id" property="threeId" jdbcType="VARCHAR" />
+		<result column="threetable_num" property="threetableNum" jdbcType="INTEGER" />
+		<result column="threetable_version" property="threetableVersion" jdbcType="VARCHAR" />
+		<result column="threetable_name" property="threetableName" jdbcType="VARCHAR" />
+		<result column="threetable_code" property="threetableCode" jdbcType="VARCHAR" />
 		<result column="user_id" property="userId" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		threetable_id, three_num, threetable_num, threetable_version, threetable_name,
+		threetable_id, department, three_id, threetable_num,
+		threetable_version, threetable_name,
 		threetable_code,
-		user_id, create_time
+		user_id,
+		create_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -28,19 +27,26 @@
 		where threetable_id = #{threetableId,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from threetable
+		delete from
+		threetable
 		where threetable_id = #{threetableId,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.jzsk.filecode.model.entity.TrThreetable">
-		insert into threetable (threetable_id, three_num, threetable_num,
-		threetable_version, threetable_name, threetable_code,
+		insert into threetable
+		(threetable_id, department, three_id, threetable_num,
+		threetable_version,
+		threetable_name, threetable_code,
 		user_id, create_time)
-		values (#{threetableId,jdbcType=VARCHAR}, #{threeNum,jdbcType=INTEGER},
+		values
+		(#{threetableId,jdbcType=VARCHAR}, 
+		#{department,jdbcType=VARCHAR}, 
+		#{threeId,jdbcType=INTEGER},
 		#{threetableNum,jdbcType=INTEGER},
 		#{threetableVersion,jdbcType=VARCHAR},
 		#{threetableName,jdbcType=VARCHAR},
 		#{threetableCode,jdbcType=VARCHAR},
-		#{userId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+		#{userId,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP})
 	</insert>
 	<insert id="insertSelective" parameterType="com.jzsk.filecode.model.entity.TrThreetable">
 		insert into threetable
@@ -48,8 +54,11 @@
 			<if test="threetableId != null">
 				threetable_id,
 			</if>
-			<if test="threeNum != null">
-				three_num,
+			<if test="department != null">
+				department,
+			</if>
+			<if test="threeId != null">
+				three_id,
 			</if>
 			<if test="threetableNum != null">
 				threetable_num,
@@ -74,8 +83,11 @@
 			<if test="threetableId != null">
 				#{threetableId,jdbcType=VARCHAR},
 			</if>
-			<if test="threeNum != null">
-				#{threeNum,jdbcType=INTEGER},
+			<if test="department != null">
+				#{department,jdbcType=VARCHAR},
+			</if>
+			<if test="threeId != null">
+				#{threeId,jdbcType=INTEGER},
 			</if>
 			<if test="threetableNum != null">
 				#{threetableNum,jdbcType=INTEGER},
@@ -100,14 +112,18 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.jzsk.filecode.model.entity.TrThreetable">
 		update threetable
 		<set>
-			<if test="threeNum != null">
-				three_num = #{threeNum,jdbcType=INTEGER},
+			<if test="threeId != null">
+				three_id = #{threeId,jdbcType=INTEGER},
+			</if>
+			<if test="department != null">
+				department = #{department,jdbcType=INTEGER},
 			</if>
 			<if test="threetableNum != null">
 				threetable_num = #{threetableNum,jdbcType=INTEGER},
 			</if>
 			<if test="threetableVersion != null">
-				threetable_version = #{threetableVersion,jdbcType=VARCHAR},
+				threetable_version =
+				#{threetableVersion,jdbcType=VARCHAR},
 			</if>
 			<if test="threetableName != null">
 				threetable_name = #{threetableName,jdbcType=VARCHAR},
@@ -126,7 +142,8 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.jzsk.filecode.model.entity.TrThreetable">
 		update threetable
-		set three_num = #{threeNum,jdbcType=INTEGER},
+		set three_id = #{threeId,jdbcType=INTEGER},
+		department = #{department,jdbcType=INTEGER},
 		threetable_num = #{threetableNum,jdbcType=INTEGER},
 		threetable_version = #{threetableVersion,jdbcType=VARCHAR},
 		threetable_name = #{threetableName,jdbcType=VARCHAR},
@@ -141,9 +158,21 @@
 	<select id="countAll" resultType="java.lang.Integer">
 		SELECT count(*) FROM threetable
 	</select>
-	<select id="selectMaxByThreeNum" resultType="java.lang.Integer"
-		parameterType="java.lang.String">
-		SELECT IFNULL(MAX(threetable_num),0) FROM
-		threetable WHERE three_num = #{threeNum,jdbcType=VARCHAR}
+	<select id="selectMaxByThreeNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT IFNULL(MAX(threetable_num),0) FROM threetable
+		WHERE three_id = #{threeId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectMaxByDepartment" resultType="java.lang.Integer"
+		parameterType="com.jzsk.filecode.model.entity.TrThreetable">
+		SELECT IFNULL(MAX(threetable_num),0) FROM threetable 
+		WHERE department = #{department,jdbcType=VARCHAR}
+	</select>
+	<select id="selectMaxByThreeIdAndDepartmentAndTableName"
+		resultMap="BaseResultMap" parameterType="com.jzsk.filecode.model.entity.TrThreetable">
+		SELECT * FROM threetable 
+		WHERE threetable_name = #{threetableName,jdbcType=VARCHAR}
+		AND three_id = #{threeId,jdbcType=VARCHAR}
+		AND department = #{department,jdbcType=VARCHAR}
+		ORDER BY threetable_version DESC
 	</select>
 </mapper>

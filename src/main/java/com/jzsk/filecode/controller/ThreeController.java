@@ -21,11 +21,11 @@ import com.jzsk.filecode.controller.common.CommonController;
 import com.jzsk.filecode.model.entity.TrThree;
 import com.jzsk.filecode.model.entity.TrTwo;
 import com.jzsk.filecode.model.form.ThreeForm;
-import com.jzsk.filecode.model.form.TwoForm;
 import com.jzsk.filecode.model.value.ThreeValue;
 import com.jzsk.filecode.model.value.TwoValue;
 import com.jzsk.filecode.model.value.UserInfo;
 import com.jzsk.filecode.service.ThreeService;
+import com.jzsk.filecode.service.TwoService;
 import com.jzsk.filecode.service.UserService;
 import com.jzsk.filecode.utility.DateUtility;
 import com.jzsk.filecode.utility.ResponseUtility;
@@ -39,7 +39,8 @@ public class ThreeController extends CommonController{
 	private UserService userService;
 	@Autowired
 	private ThreeService threeService;
-	
+	@Autowired
+	private TwoService twoService;
 	
 	/**
      * @param response
@@ -75,7 +76,7 @@ public class ThreeController extends CommonController{
     		threeValue.setThreeId(trThree.getThreeId());
     		threeValue.setThreeName(trThree.getThreeName());
     		threeValue.setThreeNum(String.valueOf(trThree.getThreeNum()));
-    		threeValue.setTwoName(trThree.getTwoName());
+    		threeValue.setTwoName(twoService.selectByPrimaryKey(trThree.getTwoId()).getFileName());
     		threeValue.setUserName(userService.selectByPrimaryKey(trThree.getUserId()).getUserName());
     		threeValue.setThreeVersion(trThree.getThreeVersion());    		
     		threeValues.add(threeValue);
@@ -88,7 +89,7 @@ public class ThreeController extends CommonController{
     }
     
     /**
-     * 跳转到新增二级编号界面
+     * 跳转到新增三级编号界面
      * @param response
      * @param request
      * @param modelMap
@@ -97,7 +98,7 @@ public class ThreeController extends CommonController{
      */
     @SuppressWarnings("unchecked")
     @RequestMapping(value = UrlConstants.ADMIN_THREE_ADD)
-    public String addFilecode(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
+    public String addThreeCode(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) throws Exception {
         // map
         Map<String, Object> attrMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
         try {
@@ -110,7 +111,17 @@ public class ThreeController extends CommonController{
             }
         } catch (Exception e) {
             // 什么都不做
-        }                      
+        }  
+        List<TrTwo> twoValues = twoService.selectLatestTwoList(); 
+        List<TwoValue> twos = new ArrayList<>();
+        for (TrTwo trTwo : twoValues) {
+        	TwoValue twoValue = new TwoValue();
+        	twoValue.setFileName(trTwo.getFileName());
+        	twoValue.setTwoId(trTwo.getTwoId());
+        	twoValue.setVersion(trTwo.getVersion());
+        	twos.add(twoValue);
+		}
+        modelMap.put("twos", twos);
         return "addthree";
     }
     
@@ -148,7 +159,7 @@ public class ThreeController extends CommonController{
 		trThree.setThreeId(TwoIdUtility.generateTwoId());
 		trThree.setThreeName(threeForm.getThreeName());
 		trThree.setThreeVersion(threeForm.getThreeVersion());
-		trThree.setTwoName(threeForm.getTwoName());
+		trThree.setTwoId(threeForm.getTwoId());
 		
 		List<TrThree> trThreeBySelectList = threeService.selectMaxByTwoNameAndDepartmentAndTableName(trThree);
 		TrThree trThreeBySelect = null;
@@ -167,18 +178,25 @@ public class ThreeController extends CommonController{
 			}else {
 				numString = String.valueOf(threeNum);
 			}
+			String twoNum = twoService.selectByPrimaryKey(threeForm.getTwoId()).getTwoNum().toString();
+			if (twoNum.length() != 3) {
+				twoNum = "0" + twoNum; 
+			} 
+			if (twoNum.length() != 3) {
+				twoNum = "0" + twoNum; 
+			} 
 			String threeCode = "JZ.3." + threeForm.getDepartment() + "." + numString 
-					+ threeForm.getThreeVersion()  + "-" + threeForm.getTwoName() + "-" + threeForm.getYear();
+					+ threeForm.getThreeVersion()  + "-" + twoNum + "-" + threeForm.getYear();
 			trThree.setThreeCode(threeCode);
 		} else {
 			//以前有记录，修改版本号
 			trThreeBySelect = trThreeBySelectList.get(0);
-			trThreeBySelect.setThreeVersion(threeForm.getThreeVersion());
+			trThreeBySelect.setThreeId(TwoIdUtility.generateTwoId());
 			trThreeBySelect.setCreateTime(DateUtility.getCurrentTimestamp());
 			String threeCode = trThreeBySelect.getThreeCode();
-			threeCode = threeCode.substring(0,threeCode.length()-2);
-			threeCode += threeForm.getThreeVersion();
+			threeCode = threeCode.replace(trThreeBySelect.getThreeVersion(), threeForm.getThreeVersion());
 			trThreeBySelect.setThreeCode(threeCode);
+			trThreeBySelect.setThreeVersion(threeForm.getThreeVersion());
 		}
 		String createUserId = "";
 		if (StringUtility.isEmptyAfterTrim(threeForm.getCreateUser())) {
@@ -188,9 +206,16 @@ public class ThreeController extends CommonController{
 		} else {
 			createUserId = threeForm.getCreateUser();
 		}
-		trThree.setUserId(createUserId);
-		
-		int resultTotal = threeService.insert(trThree);
+		int resultTotal = 0;
+		if (trThreeBySelectList.isEmpty()) {
+			trThree.setUserId(createUserId);
+			resultTotal = threeService.insert(trThree);
+		} else {
+			trThreeBySelect.setUserId(createUserId);
+			resultTotal = threeService.insert(trThreeBySelect);
+			
+		}
+
         //检查ip地址
 		JSONObject result = new JSONObject();
 		if (resultTotal > 0)														// 操作成功

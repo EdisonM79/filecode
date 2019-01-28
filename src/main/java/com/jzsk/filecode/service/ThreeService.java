@@ -29,4 +29,5 @@ public interface ThreeService {
 	
 	List<TrThree> selectMaxByTwoNameAndDepartmentAndTableName(TrThree trThree);
 
+	List<TrThree> selectLatestThreeList();
 }

@@ -58,11 +58,11 @@
 				</span> </div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>二级文件名称：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>三级文件名称：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name=twoId id="twoId" class="select">
-					<c:forEach items="${twos}" var="two">  
-						<option value="${two.twoId}">${two.fileName}</option>	
+				<select name=threeId id="threeId" class="select">
+					<c:forEach items="${threes}" var="three">  
+						<option value="${three.threeId}">${three.threeName}</option>	
 					</c:forEach>				
 				</select>
 				</span> </div>
@@ -100,7 +100,7 @@ $(document).ready(function ()
 	$("#addButton").click(function( )
 	{
 		 var department = $("#department").val();
-         var twoId = $("#twoId").val();
+         var threeId = $("#threeId").val();
          var tableVersion = $("#tableVersion").val();
          var tableName = $("#tableName").val();
          var createUser = $("#createUser").val();
@@ -110,7 +110,7 @@ $(document).ready(function ()
         	 return false;
          }
          
-         if(twoId==null||twoId==""){
+         if(threeId==null||threeId==""){
              layer.alert("请选择文件名称！");
              return false;
          }
@@ -132,7 +132,7 @@ $(document).ready(function ()
              cache: true,
              type: "POST",
              dataType: "json",
-             url:"${pageContext.request.contextPath}/admin/twotable/save",
+             url:"${pageContext.request.contextPath}/admin/threetable/save",
              data:$('#form-product-add').serialize(),// 你的formId
              async: true,
              success: function (result) {

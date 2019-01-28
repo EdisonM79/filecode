@@ -25,4 +25,8 @@ public interface ThreetableService {
     int countAll();
     
     int selectMaxByThreeNum(String threeNum);
+    
+    int selectMaxByDepartment(TrThreetable record);
+    
+    List<TrThreetable> selectMaxByThreeIdAndDepartmentAndTableName(TrThreetable record);
 }

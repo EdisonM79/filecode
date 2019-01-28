@@ -60,34 +60,10 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>二级文件名称：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="twoName" id="twoName" class="select">
-					<option value="001">公司质量责任制</option>
-					<option value="002">风险管理程序</option>
-					<option value="003">人力资源管理程序</option>
-					<option value="004">基础设施控制程序</option>
-					<option value="005">过程运行环境控制程序</option>
-					<option value="006">监视和测量设备控制程序</option>
-					<option value="007">知识管理</option>
-					<option value="008">文件控制程序</option>
-					<option value="009">记录控制程序</option>
-					<option value="010">质量信息控制程序</option>
-					<option value="011">顾客需求管理程序</option>
-					<option value="012">设计开发和新产品试制程序</option>
-					<option value="013">设计和开发的试验控制程序</option>
-					<option value="014">技术状态管理程序</option>
-					<option value="015">采购程序</option>
-					<option value="016">供方管理程序</option>
-					<option value="017">计量、试验外包方控制程序</option>
-					<option value="018">外部运输方控制程序</option>
-					<option value="019">生产和服务提供控制程序</option>
-					<option value="020">关键特殊过程控制程序</option>
-					<option value="021">产品放行程序</option>
-					<option value="022">不合格品控制程序</option>					
-					<option value="023">顾客满意度的监视和测量程序</option>
-					<option value="024">内部审核控制程序</option>
-					<option value="025">管理评审控制程序</option>
-					<option value="026">纠正、改进程序</option>
-					<option value="000">无程序文件</option>
+				<select name=twoId id="twoId" class="select">
+					<c:forEach items="${twos}" var="two">  
+						<option value="${two.twoId}">${two.fileName}</option>	
+					</c:forEach>				
 				</select>
 				</span> </div>
 		</div>
@@ -141,7 +117,7 @@ $(document).ready(function ()
 	$("#addButton").click(function( )
 	{
 		 var department = $("#department").val();
-         var twoName = $("#twoName").val();
+         var twoId = $("#twoId").val();
          var threeName = $("#threeName").val();
          var version = $("#threeVersion").val();
          var year = $("#year").val();
@@ -152,7 +128,7 @@ $(document).ready(function ()
         	 return false;
          }
          
-         if(twoName==null||twoName==""){
+         if(twoId==null||twoId==""){
              layer.alert("请选择二级文件名称！");
              return false;
          }

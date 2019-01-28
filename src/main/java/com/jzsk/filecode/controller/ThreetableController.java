@@ -18,10 +18,15 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.jzsk.filecode.constants.UrlConstants;
 import com.jzsk.filecode.controller.common.CommonController;
+import com.jzsk.filecode.model.entity.TrThree;
 import com.jzsk.filecode.model.entity.TrThreetable;
+import com.jzsk.filecode.model.entity.TrTwo;
 import com.jzsk.filecode.model.entity.TrTwotable;
+import com.jzsk.filecode.model.form.ThreetableForm;
 import com.jzsk.filecode.model.form.TwotableForm;
+import com.jzsk.filecode.model.value.ThreeValue;
 import com.jzsk.filecode.model.value.ThreetableValue;
+import com.jzsk.filecode.model.value.TwoValue;
 import com.jzsk.filecode.model.value.TwotableValue;
 import com.jzsk.filecode.model.value.UserInfo;
 import com.jzsk.filecode.service.ThreeService;
@@ -74,37 +79,20 @@ public class ThreetableController extends CommonController{
     		ThreetableValue threetableValue = new ThreetableValue();
     		
     		threetableValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trThreetable.getCreateTime()));
-    		threetableValue.setThreeName(trThreetable.getThreeNum());
-//    		threetableValue.setThreeName(trThreetable.getThreeNum());
-//    		threetableValue.setThreetableCode(trThreetable.getThreetableCode());
-//    		threetableValue.setThreetableId(trThreetable.getThreetableId());
-//    		threetableValue.setThreetableName(threetableName);
-//    		
-//    		twotableValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trTwotable.getCreateTime()));
-//    		twotableValue.setDepartment(trTwotable.getDepartment());
-//    		twotableValue.setTableName(trTwotable.getTableName());
-//    		int num = trTwotable.getTableNum();
-//    		String numString =""; 
-//    		if (num < 10 ) {
-//    			numString = "00"+ String.valueOf(num);
-//			} else if (num > 10 && num<100 ) {
-//    			numString = "0"+ String.valueOf(num);
-//			}else {
-//				numString = String.valueOf(num);
-//			}
-//    		
-//    		twotableValue.setTableNum(numString);
-//    		twotableValue.setTableVersion(trTwotable.getTableVersion());
-//    		twotableValue.setTwoName(trTwotable.getTwoId());
-//    		twotableValue.setTwotableId(trTwotable.getTwotableId());
-//    		twotableValue.setUsername(userService.selectByPrimaryKey(trTwotable.getUserId()).getUserName());
-//    		twotableValue.setTableCode(trTwotable.getTableCode());
-//    		twotableValues.add(twotableValue);
+    		threetableValue.setThreeName(threeService.selectByPrimaryKey(trThreetable.getThreeId()).getThreeName());
+    		threetableValue.setThreetableCode(trThreetable.getThreetableCode());
+    		threetableValue.setThreetableId(trThreetable.getThreetableId());
+    		threetableValue.setThreetableName(trThreetable.getThreetableName());
+    		threetableValue.setThreetableNum(trThreetable.getThreetableNum().toString());
+    		threetableValue.setThreetableVersion(trThreetable.getThreetableVersion());
+    		threetableValue.setUserName(userService.selectByPrimaryKey(trThreetable.getUserId()).getUserName());
+    		threetableValue.setDepartment(trThreetable.getDepartment());
+    		threetableValues.add(threetableValue);
 		} 	
-//    	int count = twotableService.countAll();
-//    	modelMap.put("count", count);
-//    	modelMap.put("twotableValues", twotableValues);       
-    	return null;
+    	int count = threetableService.countAll();
+    	modelMap.put("count", count);
+    	modelMap.put("threetableValues", threetableValues);       
+    	return "threetablelist";
     	
     }
     
@@ -131,7 +119,16 @@ public class ThreetableController extends CommonController{
             }
         } catch (Exception e) {
             // 什么都不做
-        }                      
+        }       
+        List<TrThree> threeValues = threeService.selectLatestThreeList();
+        List<ThreeValue> threes = new ArrayList<>();
+        for (TrThree trThree : threeValues) {
+        	ThreeValue threeValue = new ThreeValue();
+        	threeValue.setThreeId(trThree.getThreeId());
+        	threeValue.setThreeName(trThree.getThreeName());
+        	threes.add(threeValue);
+		}
+        modelMap.put("threes", threes);
         return "addthreetable";
     }
     
@@ -146,7 +143,7 @@ public class ThreetableController extends CommonController{
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = UrlConstants.ADMIN_THREETABLE_SAVE, method = RequestMethod.POST)
-	public String saveThree(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, TwotableForm twotableForm) throws Exception {
+	public String saveThree(HttpServletResponse response, HttpServletRequest request,ModelMap  modelMap, ThreetableForm threetableForm) throws Exception {
 		// 设置response
 		setResponseForJson(request, response);
 		// map
@@ -162,41 +159,70 @@ public class ThreetableController extends CommonController{
 		} catch (Exception e) {
 			// 什么都不做
 		}
-		TrTwotable trTwotable = new TrTwotable();
+		TrThreetable trThreetable = new TrThreetable();
 		
-		trTwotable.setCreateTime(DateUtility.getCurrentTimestamp());
-		trTwotable.setDepartment(twotableForm.getDepartment());
-		trTwotable.setTableName(twotableForm.getTableName());
-		trTwotable.setTableVersion(twotableForm.getTableVersion());
-		trTwotable.setTwoId(twotableForm.getTwoName());
-		trTwotable.setTwotableId(TwoIdUtility.generateTwoId());
-		Integer tableNum = 0;
-		tableNum++;
-		trTwotable.setTableNum(tableNum);
+		trThreetable.setCreateTime(DateUtility.getCurrentTimestamp());
+		trThreetable.setDepartment(threetableForm.getDepartment());
+		trThreetable.setThreetableName(threetableForm.getTableName());
+		trThreetable.setThreetableVersion(threetableForm.getTableVersion());
+		trThreetable.setThreeId(threetableForm.getThreeId());
+		//trTwotable.setTwotableId(TwoIdUtility.generateTwoId());
 		
-		int num = tableNum;
-		String numString =""; 
-		if (num < 10 ) {
-			numString = "00"+ String.valueOf(num);
-		} else if (num > 10 && num<100 ) {
-			numString = "0"+ String.valueOf(num);
-		}else {
-			numString = String.valueOf(num);
+		List<TrThreetable> trThreetableBySelectList = threetableService.selectMaxByThreeIdAndDepartmentAndTableName(trThreetable);
+		TrThreetable trThreetableBySelect = null;
+		
+		if (trThreetableBySelectList.isEmpty()) {
+			//此处是没有找到以前的，所以为新增,先找到本部门，使用的最大文件序号
+			Integer tableNum = threetableService.selectMaxByDepartment(trThreetable);
+			tableNum++; //最大文件序号加1
+			trThreetable.setThreetableNum(tableNum);
+			String numString = String.valueOf(tableNum); 
+			if (numString.length() != 2 ) {
+				numString = "0"+ numString;
+			} 
+			String three_num = String.valueOf(threeService.selectByPrimaryKey(threetableForm.getThreeId()).getThreeNum());
+			if (three_num.length() != 3) {
+				three_num = "0" + three_num;
+			}
+			if (three_num.length() != 3) {
+				three_num = "0" + three_num;
+			}
+			//拼凑表达编号
+			String tableCode = "JZ.2."+threetableForm.getDepartment()+three_num+"-"+numString+threetableForm.getTableVersion();
+			trThreetable.setThreetableCode(tableCode);	
+		} else {
+			trThreetableBySelect = trThreetableBySelectList.get(0);
+			//此处是找到了以前的，所以当前操作为更新文档version
+			trThreetableBySelect.setThreetableVersion(threetableForm.getTableVersion());
+			String tableCode = trThreetableBySelect.getThreetableCode();
+			//去掉最后两位的版本号
+			tableCode = tableCode.substring(0, tableCode.length()-2);
+			//再加上最后的两位版本号
+			tableCode += threetableForm.getTableVersion();
+			trThreetableBySelect.setThreetableCode(tableCode);   //更新表单编号
+			trThreetableBySelect.setCreateTime(DateUtility.getCurrentTimestamp());    //更新生成时间
+			trThreetableBySelect.setThreetableId(TwoIdUtility.generateTwoId());			//新增表单ID
 		}
-		
-		String tableCode = "JZ.2."+twotableForm.getDepartment()+twotableForm.getTwoName()+"-"+numString+twotableForm.getTableVersion();
-		trTwotable.setTableCode(tableCode);
 		String createUserId = "";
-		if (StringUtility.isEmptyAfterTrim(twotableForm.getCreateUser())) {
+		//使用FORM传过来的id，如果传过来为空，则使用session里面的值
+		if (StringUtility.isEmptyAfterTrim(threetableForm.getCreateUser())) {
 			HttpSession session = request.getSession();
 			UserInfo currentUser = (UserInfo)session.getAttribute("currentUser");
 			createUserId = currentUser.getUserId();
 		} else {
-			createUserId = twotableForm.getCreateUser();
+			createUserId = threetableForm.getCreateUser();
 		}
-		trTwotable.setUserId(createUserId);
 		
-		int resultTotal = twotableService.insert(trTwotable);
+		int resultTotal = 0;
+		if (trThreetableBySelectList.isEmpty()) {
+			trThreetable.setUserId(createUserId);
+			trThreetable.setThreetableId(TwoIdUtility.generateTwoId());
+			resultTotal = threetableService.insert(trThreetable);
+		} else {
+			trThreetableBySelect.setUserId(createUserId);
+			resultTotal = threetableService.insert(trThreetableBySelect);
+		}
+		
         //检查ip地址
 		JSONObject result = new JSONObject();
 		if (resultTotal > 0)														// 操作成功

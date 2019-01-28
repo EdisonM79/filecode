@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="pd-20">
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> 
 		<span class="l">
-			<a class="btn btn-primary radius" onclick="employee_add('项目录入','${pageContext.request.contextPath}/admin/twotable/add')" href="javascript:;">
+			<a class="btn btn-primary radius" onclick="employee_add('项目录入','${pageContext.request.contextPath}/admin/threetable/add')" href="javascript:;">
 				<i class="Hui-iconfont">&#xe600;</i> 新增编号
 			</a>
 		</span> 

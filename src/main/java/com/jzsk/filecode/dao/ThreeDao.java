@@ -25,4 +25,6 @@ public interface ThreeDao {
     int selectMaxByTwoNameAndDepartment(TrThree trThree);
     
     List<TrThree> selectMaxByTwoNameAndDepartmentAndTableName(TrThree trThree);
+    
+    List<TrThree> selectLatestThreeList();
 }

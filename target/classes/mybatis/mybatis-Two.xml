@@ -164,4 +164,10 @@
 		two WHERE year = #{year,jdbcType=VARCHAR}
 		AND department = #{department,jdbcType=VARCHAR}
 	</select>
+	<select id="selectLatestTwoList" resultMap="BaseResultMap">
+		select two.* from two, 
+		(select max(version) version, file_name from two group by file_name) two2 
+		where two.file_name = two2.file_name and
+		two.version = two2.version;
+	</select>
 </mapper>

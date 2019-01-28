@@ -18,6 +18,8 @@ public class ThreetableValue {
 
 	private String createTime;
 
+	private String department;
+
 	public String getThreetableId() {
 		return threetableId;
 	}
@@ -80,6 +82,14 @@ public class ThreetableValue {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
 }

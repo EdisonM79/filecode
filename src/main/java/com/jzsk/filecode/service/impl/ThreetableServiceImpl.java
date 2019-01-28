@@ -68,4 +68,16 @@ public class ThreetableServiceImpl implements ThreetableService {
 		return threetableDao.selectMaxByThreeNum(threeNum);
 	}
 
+	@Override
+	public int selectMaxByDepartment(TrThreetable record) {
+		// TODO Auto-generated method stub
+		return threetableDao.selectMaxByDepartment(record);
+	}
+
+	@Override
+	public List<TrThreetable> selectMaxByThreeIdAndDepartmentAndTableName(TrThreetable record) {
+		// TODO Auto-generated method stub
+		return threetableDao.selectMaxByThreeIdAndDepartmentAndTableName(record);
+	}
+
 }

@@ -75,16 +75,7 @@ public class TwotableController extends CommonController{
     		twotableValue.setCreateTime(DateUtility.toStringDate("yyyy-MM-dd HH:mm:ss", trTwotable.getCreateTime()));
     		twotableValue.setDepartment(trTwotable.getDepartment());
     		twotableValue.setTableName(trTwotable.getTableName());
-    		int num = trTwotable.getTableNum();
-    		String numString =""; 
-    		if (num < 10 ) {
-    			numString = "00"+ String.valueOf(num);
-			} else if (num > 10 && num<100 ) {
-    			numString = "0"+ String.valueOf(num);
-			}else {
-				numString = String.valueOf(num);
-			}
-    		twotableValue.setTableNum(numString);
+    		twotableValue.setTableNum(trTwotable.getTableNum().toString());
     		twotableValue.setTableVersion(trTwotable.getTableVersion());
     		twotableValue.setTwoName(twoService.selectByPrimaryKey(trTwotable.getTwoId()).getFileName());
     		twotableValue.setTwotableId(trTwotable.getTwotableId());
@@ -123,7 +114,7 @@ public class TwotableController extends CommonController{
         } catch (Exception e) {
             // 什么都不做
         }  
-        List<TrTwo> twoValues = twoService.selectAllTwo(); 
+        List<TrTwo> twoValues = twoService.selectLatestTwoList(); 
         List<TwoValue> twos = new ArrayList<>();
         for (TrTwo trTwo : twoValues) {
         	TwoValue twoValue = new TwoValue();

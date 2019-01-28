@@ -75,4 +75,10 @@ public class ThreeServiceImpl implements ThreeService {
 		return threedao.selectMaxByTwoNameAndDepartmentAndTableName(trThree);
 	}
 
+	@Override
+	public List<TrThree> selectLatestThreeList() {
+		// TODO Auto-generated method stub
+		return threedao.selectLatestThreeList();
+	}
+
 }

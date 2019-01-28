@@ -74,4 +74,10 @@ public class TwoServiceImpl implements TwoService {
 		return twodao.selectMaxByYearAndDepartment(trTwo);
 	}
 
+	@Override
+	public List<TrTwo> selectLatestTwoList() {
+		// TODO Auto-generated method stub
+		return twodao.selectLatestTwoList();
+	}
+
 }

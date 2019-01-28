@@ -23,4 +23,8 @@ public interface ThreetableDao {
     int countAll();
     
     int selectMaxByThreeNum(String threeNum);
+    
+    int selectMaxByDepartment(TrThreetable record);
+    
+    List<TrThreetable> selectMaxByThreeIdAndDepartmentAndTableName(TrThreetable record);
 }

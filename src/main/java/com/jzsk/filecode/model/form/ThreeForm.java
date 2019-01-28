@@ -6,15 +6,13 @@ public class ThreeForm {
 
 	private String department;
 
-	private String twoName;
+	private String twoId;
 
 	private String threeVersion;
 
 	private String threeName;
-	
+
 	private String year;
-	
-	
 
 	public String getYear() {
 		return year;
@@ -40,12 +38,12 @@ public class ThreeForm {
 		this.department = department;
 	}
 
-	public String getTwoName() {
-		return twoName;
+	public String getTwoId() {
+		return twoId;
 	}
 
-	public void setTwoName(String twoName) {
-		this.twoName = twoName;
+	public void setTwoId(String twoId) {
+		this.twoId = twoId;
 	}
 
 	public String getThreeVersion() {

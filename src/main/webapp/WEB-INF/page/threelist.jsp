@@ -76,35 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<c:if test="${three.department=='ZH'}">综合部</c:if>
 						<c:if test="${three.department=='YX'}">营销部</c:if>
 					</td>
-					<td>
-						<c:if test="${three.twoName=='001'}">公司质量责任制</c:if>
-						<c:if test="${three.twoName=='002'}">风险管理程序</c:if>
-						<c:if test="${three.twoName=='003'}">人力资源管理程序</c:if>
-						<c:if test="${three.twoName=='004'}">基础设施控制程序</c:if>
-						<c:if test="${three.twoName=='005'}">过程运行环境控制程序</c:if>
-						<c:if test="${three.twoName=='006'}">监视和测量设备控制程序</c:if>
-						<c:if test="${three.twoName=='007'}">知识管理</c:if>
-						<c:if test="${three.twoName=='008'}">文件控制程序</c:if>
-						<c:if test="${three.twoName=='009'}">记录控制程序</c:if>
-						<c:if test="${three.twoName=='010'}">质量信息控制程序</c:if>
-						<c:if test="${three.twoName=='011'}">顾客需求管理程序</c:if>
-						<c:if test="${three.twoName=='012'}">设计开发和新产品试制程序</c:if>
-						<c:if test="${three.twoName=='013'}">设计和开发的试验控制程序</c:if>
-						<c:if test="${three.twoName=='014'}">技术状态管理程序</c:if>
-						<c:if test="${three.twoName=='015'}">采购程序</c:if>
-						<c:if test="${three.twoName=='016'}">供方管理程序</c:if>
-						<c:if test="${three.twoName=='017'}">计量、试验外包方控制程序</c:if>
-						<c:if test="${three.twoName=='018'}">外部运输方控制程序</c:if>
-						<c:if test="${three.twoName=='019'}">生产和服务提供控制程序</c:if>
-						<c:if test="${three.twoName=='020'}">关键特殊过程控制程序</c:if>
-						<c:if test="${three.twoName=='021'}">产品放行程序</c:if>
-						<c:if test="${three.twoName=='022'}">不合格品控制程序</c:if>
-						<c:if test="${three.twoName=='023'}">顾客满意度的监视和测量程序</c:if>
-						<c:if test="${three.twoName=='024'}">内部审核控制程序</c:if>
-						<c:if test="${three.twoName=='025'}">管理评审控制程序</c:if>
-						<c:if test="${three.twoName=='026'}">纠正、改进程序</c:if>
-						<c:if test="${three.twoName=='000'}">无程序文件</c:if>
-					</td>
+					<td>${three.twoName}</td>
 					<td>${three.threeName}</td>
 					<td>${three.threeVersion}</td>
 					<td>${three.threeCode}</td>

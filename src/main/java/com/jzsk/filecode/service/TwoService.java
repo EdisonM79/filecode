@@ -29,4 +29,6 @@ public interface TwoService {
     List<TrTwo> selectAllByFilenameAndDepartmentAndYear(TrTwo trTwo);
     
     int selectMaxByYearAndDepartment(TrTwo trTwo);
+    
+    List<TrTwo> selectLatestTwoList();
 }

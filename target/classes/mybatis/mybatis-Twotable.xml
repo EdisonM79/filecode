@@ -180,17 +180,15 @@
 	</select>
 	<select id="selectMaxByTwoIdAndDepartment" resultType="java.lang.Integer"
 		parameterType="com.jzsk.filecode.model.entity.TrTwotable">
-		SELECT IFNULL(MAX(table_num),0) FROM
-		twotable WHERE
-		two_id = #{twoId,jdbcType=VARCHAR} AND department =
-		#{department,jdbcType=VARCHAR}
+		SELECT IFNULL(MAX(table_num),0) FROM twotable 
+		WHERE department = #{department,jdbcType=VARCHAR}
 	</select>
 	<select id="selectMaxByTwoIdAndDepartmentAndTableName"
 		resultMap="BaseResultMap" parameterType="com.jzsk.filecode.model.entity.TrTwotable">
-		SELECT * FROM twotable WHERE table_name = #{tableName,jdbcType=VARCHAR}
+		SELECT * FROM twotable 
+		WHERE table_name = #{tableName,jdbcType=VARCHAR}
 		AND two_id = #{twoId,jdbcType=VARCHAR}
 		AND department = #{department,jdbcType=VARCHAR}
 		ORDER BY table_version DESC
 	</select>
-
 </mapper>
