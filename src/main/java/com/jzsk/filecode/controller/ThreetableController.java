@@ -20,18 +20,12 @@ import com.jzsk.filecode.constants.UrlConstants;
 import com.jzsk.filecode.controller.common.CommonController;
 import com.jzsk.filecode.model.entity.TrThree;
 import com.jzsk.filecode.model.entity.TrThreetable;
-import com.jzsk.filecode.model.entity.TrTwo;
-import com.jzsk.filecode.model.entity.TrTwotable;
 import com.jzsk.filecode.model.form.ThreetableForm;
-import com.jzsk.filecode.model.form.TwotableForm;
 import com.jzsk.filecode.model.value.ThreeValue;
 import com.jzsk.filecode.model.value.ThreetableValue;
-import com.jzsk.filecode.model.value.TwoValue;
-import com.jzsk.filecode.model.value.TwotableValue;
 import com.jzsk.filecode.model.value.UserInfo;
 import com.jzsk.filecode.service.ThreeService;
 import com.jzsk.filecode.service.ThreetableService;
-import com.jzsk.filecode.service.TwotableService;
 import com.jzsk.filecode.service.UserService;
 import com.jzsk.filecode.utility.DateUtility;
 import com.jzsk.filecode.utility.ResponseUtility;
@@ -188,7 +182,7 @@ public class ThreetableController extends CommonController{
 				three_num = "0" + three_num;
 			}
 			//拼凑表达编号
-			String tableCode = "JZ.2."+threetableForm.getDepartment()+three_num+"-"+numString+threetableForm.getTableVersion();
+			String tableCode = "JZ.3."+threetableForm.getDepartment()+three_num+"-"+numString+threetableForm.getTableVersion();
 			trThreetable.setThreetableCode(tableCode);	
 		} else {
 			trThreetableBySelect = trThreetableBySelectList.get(0);

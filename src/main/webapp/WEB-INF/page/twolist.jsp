@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th width="80">编号名</th>
 					<th width="80">创建人</th>
 					<th width="80">创建时间</th>
-					<th width="80">操作</th>
+					<c:if test = "${currentUser.role!='2'}"><th width="80">操作</th></c:if>
 				</tr>
 			</thead>
 			<tbody>
@@ -84,6 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>${two.twoCode}</td>
 					<td>${two.username}</td>
 					<td>${two.createTime}</td>
+					<c:if test="${currentUser.role!='2'}">
 					<td class="f-14 td-manage">
 						<a style="text-decoration:none" class="ml-5" onClick="employee_edit('编辑','${pageContext.request.contextPath}/employee/preSave?id=${employee.id }','10001')" href="javascript:;" title="编辑">
 							<i class="Hui-iconfont">&#xe6df;</i>
@@ -92,6 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<i class="Hui-iconfont">&#xe6e2;</i>
 						</a>
 					</td>
+					</c:if>
 				</tr>
 			</c:forEach> 		
 			</tbody>

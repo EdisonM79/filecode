@@ -165,8 +165,8 @@ public class UserController extends CommonController{
 		}
 		//数据库取数据
 		UserInfo user = userService.selectByLoginName(userInfo.getLoginName());
-		if (user == null) {
-			addActionError("userInfo.username", MsgConstants.ERROR_01005_MSG, MESSAGE_DIV_ERROR, modelMap);
+		if (null == user.getPassword() || null == user.getPassword()) {
+			addActionError("userInfo.loginName", MsgConstants.ERROR_01005_MSG, MESSAGE_DIV_ERROR, modelMap);
 			modelMap.put("userInfo", userInfo);
 			return "login";
 		}
@@ -305,17 +305,26 @@ public class UserController extends CommonController{
 		userInfo.setUserName(userInfoForm.getUserName());
 		userInfo.setUserId(UserIdUtility.generateUserId());
 		
-		int resultTotal = userService.addUser(userInfo);
-        //检查ip地址
 		JSONObject result = new JSONObject();
-		if (resultTotal > 0)														// 操作成功
-        {
-            result.put("success", true);
-        } else {																	// 操作失败
-            result.put("success", false);
-            result.put("message", "操作失败！");
-        }
-        ResponseUtility.write(response, result);
+		
+		//数据库取数据
+		UserInfo user = userService.selectByLoginName(userInfo.getLoginName());
+		if (null != user.getPassword()) {
+			result.put("success", false);
+            result.put("message", "操作失败，该用户名已经存在！");
+		} else {
+			int resultTotal = userService.addUser(userInfo);
+	        //检查ip地址			
+			if (resultTotal > 0)														// 操作成功
+	        {
+	            result.put("success", true);
+	        } else {																	// 操作失败
+	            result.put("success", false);
+	            result.put("message", "操作失败！");
+	        }
+	        
+		}
+		ResponseUtility.write(response, result);
         return null;
 	}
 }
