@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="com.jzsk.filecode.TestMyBatis" time="0.78" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="com.jzsk.filecode.TestMyBatis" time="0.599" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_152\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
-    <property name="classworlds.conf" value="E:\MyWorkspace\Eclipse_Workspace\study_workspace\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf2200996215632509710.tmp"/>
+    <property name="classworlds.conf" value="E:\MyWorkspace\Eclipse_Workspace\study_workspace\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf8550573174707434214.tmp"/>
     <property name="sun.jnu.encoding" value="GBK"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_152\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:/java_jre1.8/bin/server;D:/java_jre1.8/bin;D:/java_jre1.8/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Qt\Qt5.3.2\5.3\msvc2010_opengl\bin;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x64;C:\Program Files\Java\jdk1.8.0_152\bin;C:\Program Files\Java\jdk1.8.0_152\jre\bin;C:\development tool\apache-maven-3.5.2/bin;D:\Git\cmd;D:\LabView\National Instruments\Shared\LabVIEW CLI;C:\Program Files\TortoiseSVN\bin;D:\python;D:\python\Scripts;D:\python\Lib\site-packages\pyqt5-tools;C:\Program Files\MySQL\MySQL Server 5.7\bin;D:\python\Scripts\;D:\python\;D:\Microsoft VS Code\bin;C:\Users\Edison\AppData\Local\Programs\Fiddler;C:\development tool\Eclipse\eclipse;;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -61,5 +61,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.jzsk.filecode.TestMyBatis" name="test" time="0.78"/>
+  <testcase classname="com.jzsk.filecode.TestMyBatis" name="test" time="0.599"/>
 </testsuite>
