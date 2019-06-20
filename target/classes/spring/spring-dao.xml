@@ -40,10 +40,6 @@
     </tx:advice>
 
     <!-- 配置那些类的方法进行事务管理 -->
-    <!-- <aop:config>
-        <aop:pointcut id="allManagerMethod" expression="execution (* com.jksmart.yqx.service.*+.do*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" />
-    </aop:config> -->
     <aop:config>
         <aop:pointcut id="allManagerMethod" expression="execution (* com.jzsk.filecode.service.*+.do*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" />
@@ -53,9 +49,8 @@
     <!-- 加载配置文件 -->
     <context:property-placeholder location="classpath:jdbc.properties" />
     <!-- 定义数据源 -->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"><!--  destroy-method="close"> -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver">
-            <!--  <value>"com.mysql.jdbc.Driver"</value>-->
         </property>
         <property name="jdbcUrl">
             <value>${jdbc.url}</value>
@@ -99,15 +94,11 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatis/mybatis.cfg.xml" />
         <property name="mapperLocations" value="classpath*:mybatis/mybatis-*.xml"/>
-        <!-- 扫描modal包，使用别名:com.jksmart.lzrs.model.entity to entity-->
-        <!-- <property name="typeAliasesPackage" value="com.jksmart.lzrs.modal" /> -->
         <!-- 扫描model包，使用别名:com.sct.oa.model.entity to entity-->
         <property name="typeAliasesPackage" value="com.jzsk.filecode.model.entity" />
     </bean>
     <!-- 扫描DAO接口包,动态实现DAO接口 -->
      <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-        <!--<property name="sqlSessionFactory"  ref="sqlSessionFactory"/> -->
-        <!-- <property name="basePackage" value="com.jksmart.lzrs.dao"></property> -->
         <property name="basePackage" value="com.jzsk.filecode.dao"></property>
         <!-- dataosource后处理的方式 -->
         <property name="sqlSessionFactoryBeanName"  value="sqlSessionFactory"/> 
@@ -115,11 +106,4 @@
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean> 
-  
-   <!--RedisDao 
-    <bean id="redisDao" class="com.jksmart.yqx.dao.cache.RedisDao">
-    <constructor-arg index="0" value="192.168.1.99"/>
-    <constructor-arg index="1" value="6379"/>
-    </bean>-->
-	<!-- <import resource="classpath*:**/spring-*.xml"/> -->
 </beans>
