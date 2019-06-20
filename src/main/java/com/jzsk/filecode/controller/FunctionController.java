@@ -61,7 +61,7 @@ public class FunctionController extends CommonController{
     }
     
     /**
-     * 上传测试
+     * 
      * 跳转到新增用户界面
      * @param response
      * @param request
